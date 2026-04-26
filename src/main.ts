@@ -118,7 +118,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <article class="service-card">
               <span class="service-num">01</span>
               <h3>콘텐츠 가공 자동화</h3>
-              <p>Notion에 작성한 원문을 발행 흐름에 맞게 정리하고, 교재·참고자료 문체를 저작권 안전한 개인 블로그 말투로 자동 각색합니다. 필요한 이미지만 선별해 본문에 배치합니다.</p>
+              <p>Notion에 작성한 원문을 발행 흐름에 맞게 정리하고, 티스토리 블로그 포스팅 스타일에 맞게 자동 각색합니다. 필요한 이미지만 선별해 본문에 배치합니다.</p>
             </article>
             <article class="service-card">
               <span class="service-num">02</span>
@@ -202,7 +202,7 @@ npm start</code></pre>
             <div class="process-item">
               <div class="process-num">02</div>
               <h3>AI 자동 각색</h3>
-              <p>Claude가 원문을 저작권 안전한 개인 블로그 말투로 각색합니다. 코드 블록과 이미지는 그대로 유지하고 설명만 재작성됩니다.</p>
+              <p>Claude가 원문을 티스토리 블로그 포스팅 스타일에 맞게 각색합니다. 코드 블록과 이미지는 그대로 유지하고 설명만 재작성됩니다.</p>
             </div>
             <div class="process-item">
               <div class="process-num">03</div>
