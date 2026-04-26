@@ -303,3 +303,64 @@ npm start</code></pre>
     </footer>
   </div>
 `
+
+// Pipeline step animation
+const STEP_DATA = [
+  { subs: ['콘텐츠 작성 대기', 'Notion에서 불러오는 중', '콘텐츠 작성 완료'] },
+  { subs: ['포맷 대기',         '발행용 구조로 정리 중',  '구조 정리 완료'] },
+  { subs: ['썸네일 생성 대기',  '썸네일 생성 중',         '썸네일 생성 완료'] },
+  { subs: ['채널 배포 대기',    '채널에 배포 중',         '배포 완료'] },
+]
+
+function setPipelineStep(activeIdx: number) {
+  document.querySelectorAll('.flow-step').forEach((el, i) => {
+    const badge = el.querySelector('.flow-status') as HTMLElement
+    const sub   = el.querySelector('.step-sub')   as HTMLElement
+    el.classList.remove('active')
+    badge.className = 'flow-status'
+    if (i < activeIdx) {
+      badge.classList.add('done');    badge.textContent = '완료';    sub.textContent = STEP_DATA[i].subs[2]
+    } else if (i === activeIdx) {
+      el.classList.add('active')
+      badge.classList.add('running'); badge.textContent = '실행 중'; sub.textContent = STEP_DATA[i].subs[1]
+    } else {
+      badge.classList.add('wait');    badge.textContent = '대기';    sub.textContent = STEP_DATA[i].subs[0]
+    }
+  })
+  const pill    = document.querySelector<HTMLElement>('.status-pill')
+  const counter = document.querySelector<HTMLElement>('.tag-sm')
+  if (pill)    { pill.textContent = '파이프라인 실행 중'; pill.classList.remove('complete') }
+  if (counter) counter.textContent = `step ${activeIdx + 1} / 4`
+}
+
+function showPipelineDone() {
+  document.querySelectorAll('.flow-step').forEach((el, i) => {
+    const badge = el.querySelector('.flow-status') as HTMLElement
+    const sub   = el.querySelector('.step-sub')   as HTMLElement
+    el.classList.remove('active')
+    badge.className = 'flow-status done'; badge.textContent = '완료'; sub.textContent = STEP_DATA[i].subs[2]
+  })
+  const pill    = document.querySelector<HTMLElement>('.status-pill')
+  const counter = document.querySelector<HTMLElement>('.tag-sm')
+  if (pill)    { pill.textContent = '파이프라인 완료'; pill.classList.add('complete') }
+  if (counter) counter.textContent = 'step 4 / 4'
+}
+
+let pipelineStep = 1  // initial HTML shows step 2 active (index 1)
+
+function runPipelineAnimation() {
+  pipelineStep = (pipelineStep + 1) % 5  // 0–3 = steps, 4 = all-done state
+  if (pipelineStep === 4) {
+    showPipelineDone()
+    setTimeout(() => {
+      pipelineStep = 0
+      setPipelineStep(0)
+      setTimeout(runPipelineAnimation, 2500)
+    }, 1500)
+  } else {
+    setPipelineStep(pipelineStep)
+    setTimeout(runPipelineAnimation, 2500)
+  }
+}
+
+setTimeout(runPipelineAnimation, 2500)
