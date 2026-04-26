@@ -20,10 +20,11 @@ Vite + TypeScript로 구성된 정적 사이트로, Vercel을 통해 배포됩�
 | 단계 | 내용 |
 |------|------|
 | **01 콘텐츠 가공** | Notion 원문을 발행 흐름에 맞게 제목·본문·태그 구조로 정리 |
-| **02 썸네일 생성** | Gemini Image API로 콘텐츠 맥락에 맞는 1280×720 썸네일 자동 생성 |
-| **03 Tistory 발행** | Playwright 브라우저 자동화로 HTML 본문 + 썸네일 포함 발행 |
-| **04 X 포스팅** | Twitter API v2로 요약 + 링크 자동 포스팅 |
-| **05 실행 로그** | Notion 페이지에 발행 결과 자동 기록 |
+| **02 본문 각색** | Claude(Anthropic API)로 교재·참고자료 문체 → 저작권 안전한 개인 블로그 말투로 자동 각색, 필요한 이미지만 선별 |
+| **03 썸네일 생성** | Gemini Image API로 콘텐츠 맥락에 맞는 1280×720 썸네일 자동 생성 |
+| **04 Tistory 발행** | Playwright 브라우저 자동화로 HTML 본문 + 썸네일 포함 발행 |
+| **05 X 포스팅** | Twitter API v2로 요약 + 링크 자동 포스팅 |
+| **06 실행 로그** | Notion 페이지에 발행 결과 자동 기록 |
 
 👉 실제 구현 코드: [github.com/thisNorm/content-agent](https://github.com/thisNorm/content-agent)
 
