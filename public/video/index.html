@@ -1,574 +1,354 @@
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Content Agent — 데모</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body {
-        width: 1280px; height: 720px;
-        overflow: hidden; background: #0c0c10;
-      }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-  </head>
-  <body>
-    <!--
-      HyperFrames composition — Content Agent promotional video
-      Duration : 25s  |  1280 × 720
-      Render   : npx hyperframes render public/video/index.html -o public/demo.mp4
-    -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Agent — Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1280px; height: 720px; overflow: hidden; background: #0d0d0d; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+</head>
+<body>
+  <!--
+    HyperFrames composition — Content Agent
+    Duration: 25s | 1280×720
+    Render: npx hyperframes render public/video/index.html -o public/demo.mp4
+  -->
+  <div
+    id="comp"
+    data-composition-id="content-agent-promo"
+    data-start="0"
+    data-duration="25"
+    data-width="1280"
+    data-height="720"
+    style="
+      width:1280px; height:720px;
+      position:relative; overflow:hidden;
+      background:#0d0d0d;
+      font-family:'Noto Sans KR', system-ui, sans-serif;
+    "
+  >
+
+    <!-- ═══ SCENE 1 · BRAND INTRO (track 0 · 0–8s) ═══ -->
     <div
-      id="comp"
-      data-composition-id="content-agent-promo"
-      data-start="0"
-      data-duration="25"
-      data-width="1280"
-      data-height="720"
-      style="
-        width: 1280px; height: 720px;
-        position: relative; overflow: hidden;
-        background: #0c0c10;
-        font-family: 'Noto Sans KR', system-ui, sans-serif;
-      "
+      id="s1"
+      data-start="0" data-duration="8" data-track-index="0"
+      style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;"
     >
+      <!-- eyebrow -->
+      <div id="s1-ey" style="
+        font-size:12px; font-weight:700; letter-spacing:0.26em;
+        text-transform:uppercase; color:rgba(255,255,255,0.28);
+        margin-bottom:40px;
+      ">Content Automation System</div>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           SCENE 1 · BRAND INTRO  (track 0 · 0 – 8 s)
-           ═══════════════════════════════════════════════════════════ -->
-      <div
-        id="s1"
-        data-start="0"
-        data-duration="8"
-        data-track-index="0"
-        style="
-          position: absolute; inset: 0;
-          display: flex; flex-direction: column;
-          align-items: center; justify-content: center;
-          overflow: hidden;
-        "
-      >
-        <!-- decorative dot grid -->
-        <div id="s1-dots" style="
-          position: absolute; inset: 0;
-          background-image: radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1px);
-          background-size: 56px 56px;
-          pointer-events: none;
-        "></div>
+      <!-- title lines — overflow:hidden clips the slide-up -->
+      <div style="overflow:hidden; line-height:0.88;">
+        <div id="s1-t1" style="
+          font-size:128px; font-weight:900; color:#fff;
+          letter-spacing:-0.052em; line-height:0.88;
+        ">Content</div>
+      </div>
+      <div style="overflow:hidden; line-height:0.88; margin-bottom:44px;">
+        <div id="s1-t2" style="
+          font-size:128px; font-weight:900; color:#fff;
+          letter-spacing:-0.052em; line-height:0.88;
+        ">Agent</div>
+      </div>
 
-        <!-- decorative radial glow -->
-        <div id="s1-glow" style="
-          position: absolute; top: 50%; left: 50%;
-          transform: translate(-50%, -50%);
-          width: 640px; height: 640px;
-          background: radial-gradient(circle, rgba(37,99,235,0.22) 0%, transparent 70%);
-          border-radius: 50%; pointer-events: none;
-        "></div>
+      <!-- thin rule -->
+      <div id="s1-rule" style="
+        height:1px; width:0; background:rgba(255,255,255,0.16);
+        margin-bottom:30px;
+      "></div>
 
-        <!-- decorative thin accent lines -->
-        <div id="s1-line1" style="
-          position: absolute; top: 50%; left: 0; right: 0;
-          height: 1px; background: rgba(37,99,235,0.15); pointer-events: none;
-        "></div>
-        <div id="s1-line2" style="
-          position: absolute; left: 50%; top: 0; bottom: 0;
-          width: 1px; background: rgba(37,99,235,0.10); pointer-events: none;
-        "></div>
+      <!-- tagline -->
+      <div id="s1-tag" style="
+        font-size:21px; font-weight:300; color:rgba(255,255,255,0.48);
+        letter-spacing:0.01em; line-height:1.55; text-align:center;
+      ">노션에 글만 쓰면, 나머지는 시스템이 합니다</div>
+    </div>
 
-        <!-- content -->
-        <div id="s1-content" style="
-          display: flex; flex-direction: column;
-          align-items: center; gap: 20px;
-          position: relative; z-index: 1; text-align: center;
-        ">
-          <!-- CA monogram -->
-          <div id="s1-logo" style="
-            width: 76px; height: 76px; border-radius: 18px;
-            background: #2563eb;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 28px; font-weight: 900; color: #fff;
-            letter-spacing: -0.02em;
-            box-shadow: 0 0 48px rgba(37,99,235,0.55);
-          ">CA</div>
 
-          <!-- main title -->
-          <div id="s1-title" style="
-            font-size: 96px; font-weight: 900; color: #ffffff;
-            line-height: 1.0; letter-spacing: -0.045em;
-          ">Content Agent</div>
+    <!-- ═══ SCENE 2 · PIPELINE (track 1 · 7–17s) ═══ -->
+    <div
+      id="s2"
+      data-start="7" data-duration="10" data-track-index="1"
+      style="position:absolute;inset:0;opacity:0;display:flex;"
+    >
+      <!-- left: step list -->
+      <div style="
+        width:520px; flex-shrink:0;
+        padding:80px 72px;
+        border-right:1px solid rgba(255,255,255,0.06);
+        display:flex; flex-direction:column; justify-content:center;
+      ">
+        <div id="s2-wf-label" style="
+          font-size:11px; font-weight:700; letter-spacing:0.2em;
+          text-transform:uppercase; color:rgba(255,255,255,0.22);
+          margin-bottom:44px;
+        ">Workflow</div>
 
-          <!-- separator -->
-          <div id="s1-sep" style="
-            width: 72px; height: 3px;
-            background: #2563eb; border-radius: 2px;
-          "></div>
+        <!-- step rows -->
+        <div id="s2-s1" style="display:flex; gap:18px; align-items:flex-start; margin-bottom:30px;">
+          <div style="padding-top:4px; flex-shrink:0;">
+            <div id="s2-idx1" style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.5);">01</div>
+          </div>
+          <div>
+            <div id="s2-h1" style="font-size:21px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:5px;">Notion 초안 작성</div>
+            <div id="s2-d1" style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.4);line-height:1.5;">평소처럼 노션에 글만 씁니다</div>
+          </div>
+        </div>
 
-          <!-- tagline -->
-          <div id="s1-tagline" style="
-            font-size: 38px; font-weight: 700;
-            color: rgba(255,255,255,0.88);
-            line-height: 1.35; letter-spacing: -0.02em;
-            max-width: 720px;
-          ">노션에 글만 쓰면, 나머지는 시스템이 합니다</div>
+        <div id="s2-s2" style="display:flex; gap:18px; align-items:flex-start; margin-bottom:30px;">
+          <div style="padding-top:4px; flex-shrink:0;">
+            <div id="s2-idx2" style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.18);">02</div>
+          </div>
+          <div>
+            <div id="s2-h2" style="font-size:21px;font-weight:700;color:rgba(255,255,255,0.3);line-height:1.25;margin-bottom:5px;">콘텐츠 자동 가공</div>
+            <div id="s2-d2" style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.18);line-height:1.5;">발행 스타일에 맞게 자동 정리</div>
+          </div>
+        </div>
 
-          <!-- category badge -->
-          <div id="s1-badge" style="
-            padding: 9px 22px; border-radius: 24px;
-            border: 1px solid rgba(37,99,235,0.45);
-            background: rgba(37,99,235,0.12);
-            font-size: 18px; font-weight: 600;
-            color: #93c5fd; letter-spacing: 0.05em;
-          ">콘텐츠 운영 자동화 시스템</div>
+        <div id="s2-s3" style="display:flex; gap:18px; align-items:flex-start; margin-bottom:30px;">
+          <div style="padding-top:4px; flex-shrink:0;">
+            <div id="s2-idx3" style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.18);">03</div>
+          </div>
+          <div>
+            <div id="s2-h3" style="font-size:21px;font-weight:700;color:rgba(255,255,255,0.3);line-height:1.25;margin-bottom:5px;">썸네일 자동 생성</div>
+            <div id="s2-d3" style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.18);line-height:1.5;">브랜드 톤에 맞는 이미지 완성</div>
+          </div>
+        </div>
+
+        <div id="s2-s4" style="display:flex; gap:18px; align-items:flex-start;">
+          <div style="padding-top:4px; flex-shrink:0;">
+            <div id="s2-idx4" style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.18);">04</div>
+          </div>
+          <div>
+            <div id="s2-h4" style="font-size:21px;font-weight:700;color:rgba(255,255,255,0.3);line-height:1.25;margin-bottom:5px;">블로그·SNS 자동 배포</div>
+            <div id="s2-d4" style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.18);line-height:1.5;">여러 채널에 동시 발행</div>
+          </div>
         </div>
       </div>
 
+      <!-- right: heading + counter -->
+      <div style="
+        flex:1; padding:80px 80px;
+        display:flex; flex-direction:column; justify-content:center;
+      ">
+        <div id="s2-label" style="
+          font-size:11px; font-weight:700; letter-spacing:0.2em;
+          text-transform:uppercase; color:rgba(255,255,255,0.22);
+          margin-bottom:32px;
+        ">Automation Pipeline</div>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           SCENE 2 · PIPELINE DEMO  (track 1 · 7 – 17 s)
-           ═══════════════════════════════════════════════════════════ -->
-      <div
-        id="s2"
-        data-start="7"
-        data-duration="10"
-        data-track-index="1"
-        style="
-          position: absolute; inset: 0;
-          display: flex; align-items: center;
-          overflow: hidden;
-        "
-      >
-        <!-- decoratives -->
-        <div style="
-          position: absolute; left: -80px; top: 50%;
-          transform: translateY(-50%);
-          width: 440px; height: 440px;
-          background: radial-gradient(circle, rgba(37,99,235,0.14) 0%, transparent 70%);
-          pointer-events: none;
-        "></div>
-        <div style="
-          position: absolute; inset: 0;
-          background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
-          background-size: 56px 56px; pointer-events: none;
-        "></div>
+        <div id="s2-heading" style="
+          font-size:68px; font-weight:900; color:#fff;
+          line-height:1.06; letter-spacing:-0.045em;
+          margin-bottom:24px;
+        ">4단계<br/>자동화<br/>파이프라인</div>
 
-        <!-- left: heading -->
-        <div style="width: 360px; padding: 0 0 0 80px; flex-shrink: 0;">
-          <div id="s2-label" style="
-            font-size: 13px; font-weight: 700;
-            letter-spacing: 0.13em; text-transform: uppercase;
-            color: #2563eb; margin-bottom: 18px;
-            display: flex; align-items: center; gap: 8px;
-          ">
-            <span style="display:inline-block;width:18px;height:2px;background:#2563eb;border-radius:2px;"></span>
-            Workflow
-          </div>
-          <div id="s2-heading" style="
-            font-size: 52px; font-weight: 900; color: #ffffff;
-            line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 20px;
-          ">4단계<br>자동화<br>파이프라인</div>
-          <div id="s2-desc" style="
-            font-size: 18px; color: rgba(255,255,255,0.45);
-            line-height: 1.65; max-width: 240px;
-          ">Notion 초안 하나로 발행까지 자동 완성</div>
+        <div id="s2-desc" style="
+          font-size:18px; font-weight:300; color:rgba(255,255,255,0.36);
+          line-height:1.7;
+        ">Notion 초안 하나로<br/>발행까지 자동 완성됩니다</div>
+
+        <!-- step counter -->
+        <div id="s2-counter" style="
+          margin-top:52px;
+          font-size:52px; font-weight:900;
+          color:rgba(255,255,255,0.07);
+          letter-spacing:-0.04em; line-height:1;
+        ">01 / 04</div>
+      </div>
+    </div>
+
+
+    <!-- ═══ SCENE 3 · BENEFITS (track 0 · 16–23s) ═══ -->
+    <div
+      id="s3"
+      data-start="16" data-duration="7" data-track-index="0"
+      style="position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;justify-content:center;padding:80px 96px;"
+    >
+      <div id="s3-label" style="
+        font-size:11px; font-weight:700; letter-spacing:0.2em;
+        text-transform:uppercase; color:rgba(255,255,255,0.22);
+        margin-bottom:52px;
+      ">Why Content Agent</div>
+
+      <div id="s3-r1" style="
+        display:flex; align-items:center; justify-content:space-between;
+        padding:26px 0; border-bottom:1px solid rgba(255,255,255,0.06);
+      ">
+        <div style="display:flex; align-items:baseline; gap:22px;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:rgba(255,255,255,0.2);">01</span>
+          <span style="font-size:42px;font-weight:700;color:#fff;letter-spacing:-0.03em;line-height:1.1;">반복 업무 제거</span>
         </div>
-
-        <!-- right: steps -->
-        <div id="s2-steps" style="
-          flex: 1; padding: 0 80px 0 36px;
-          display: flex; flex-direction: column; gap: 11px;
-        ">
-
-          <!-- Step 1: 완료 from the start -->
-          <div id="s2-step1" style="
-            display: flex; align-items: center; gap: 16px;
-            padding: 16px 20px; border-radius: 12px;
-            border: 1px solid rgba(34,197,94,0.35);
-            background: rgba(34,197,94,0.07);
-          ">
-            <div style="
-              width: 40px; height: 40px; border-radius: 8px;
-              background: rgba(34,197,94,0.55);
-              display: flex; align-items: center; justify-content: center;
-              font-size: 15px; font-weight: 800; color: #fff; flex-shrink: 0;
-            ">01</div>
-            <div style="flex: 1;">
-              <div style="font-size: 19px; font-weight: 700; color: #fff;">Notion Draft</div>
-              <div style="font-size: 14px; color: rgba(255,255,255,0.48); margin-top: 2px;">Notion에 초안 작성</div>
-            </div>
-            <span style="
-              padding: 4px 12px; border-radius: 6px;
-              background: rgba(34,197,94,0.15);
-              border: 1px solid rgba(34,197,94,0.3);
-              font-size: 13px; font-weight: 700; color: #4ade80;
-            ">완료</span>
-          </div>
-
-          <!-- Step 2: starts 실행 중, transitions to 완료 at t=11 -->
-          <div id="s2-step2" style="
-            display: flex; align-items: center; gap: 16px;
-            padding: 16px 20px; border-radius: 12px;
-            border: 1px solid rgba(37,99,235,0.4);
-            background: rgba(37,99,235,0.09);
-          ">
-            <div id="s2-num2" style="
-              width: 40px; height: 40px; border-radius: 8px;
-              background: #2563eb;
-              display: flex; align-items: center; justify-content: center;
-              font-size: 15px; font-weight: 800; color: #fff; flex-shrink: 0;
-            ">02</div>
-            <div style="flex: 1;">
-              <div style="font-size: 19px; font-weight: 700; color: #fff;">Content Formatting</div>
-              <div style="font-size: 14px; color: rgba(255,255,255,0.48); margin-top: 2px;">발행용 구조로 자동 각색</div>
-            </div>
-            <!-- badge states -->
-            <div style="position: relative; width: 68px; height: 26px;">
-              <span id="s2-run2" style="
-                position: absolute; inset: 0;
-                display: flex; align-items: center; justify-content: center;
-                padding: 4px 10px; border-radius: 6px;
-                background: rgba(37,99,235,0.2); border: 1px solid rgba(37,99,235,0.5);
-                font-size: 13px; font-weight: 700; color: #93c5fd; white-space: nowrap;
-              ">실행 중</span>
-              <span id="s2-done2" style="
-                position: absolute; inset: 0; opacity: 0;
-                display: flex; align-items: center; justify-content: center;
-                padding: 4px 12px; border-radius: 6px;
-                background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3);
-                font-size: 13px; font-weight: 700; color: #4ade80;
-              ">완료</span>
-            </div>
-          </div>
-
-          <!-- Step 3: starts 대기, transitions to 실행 중 at t=11, done at t=13.5 -->
-          <div id="s2-step3" style="
-            display: flex; align-items: center; gap: 16px;
-            padding: 16px 20px; border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.07);
-            background: rgba(255,255,255,0.02);
-          ">
-            <div id="s2-num3" style="
-              width: 40px; height: 40px; border-radius: 8px;
-              background: rgba(255,255,255,0.08);
-              display: flex; align-items: center; justify-content: center;
-              font-size: 15px; font-weight: 800;
-              color: rgba(255,255,255,0.4); flex-shrink: 0;
-            ">03</div>
-            <div style="flex: 1;">
-              <div id="s2-name3" style="font-size: 19px; font-weight: 700; color: rgba(255,255,255,0.55);">Thumbnail Generation</div>
-              <div id="s2-sub3" style="font-size: 14px; color: rgba(255,255,255,0.3); margin-top: 2px;">썸네일 자동 생성</div>
-            </div>
-            <div style="position: relative; width: 68px; height: 26px;">
-              <span id="s2-wait3" style="
-                position: absolute; inset: 0;
-                display: flex; align-items: center; justify-content: center;
-                border-radius: 6px; background: rgba(255,255,255,0.06);
-                font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.3);
-              ">대기</span>
-              <span id="s2-run3" style="
-                position: absolute; inset: 0; opacity: 0;
-                display: flex; align-items: center; justify-content: center;
-                padding: 4px 10px; border-radius: 6px;
-                background: rgba(37,99,235,0.2); border: 1px solid rgba(37,99,235,0.5);
-                font-size: 13px; font-weight: 700; color: #93c5fd; white-space: nowrap;
-              ">실행 중</span>
-              <span id="s2-done3" style="
-                position: absolute; inset: 0; opacity: 0;
-                display: flex; align-items: center; justify-content: center;
-                padding: 4px 12px; border-radius: 6px;
-                background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3);
-                font-size: 13px; font-weight: 700; color: #4ade80;
-              ">완료</span>
-            </div>
-          </div>
-
-          <!-- Step 4: starts 대기, transitions to 실행 중 at t=13.5, done at t=16 -->
-          <div id="s2-step4" style="
-            display: flex; align-items: center; gap: 16px;
-            padding: 16px 20px; border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.07);
-            background: rgba(255,255,255,0.02);
-          ">
-            <div id="s2-num4" style="
-              width: 40px; height: 40px; border-radius: 8px;
-              background: rgba(255,255,255,0.08);
-              display: flex; align-items: center; justify-content: center;
-              font-size: 15px; font-weight: 800;
-              color: rgba(255,255,255,0.4); flex-shrink: 0;
-            ">04</div>
-            <div style="flex: 1;">
-              <div id="s2-name4" style="font-size: 19px; font-weight: 700; color: rgba(255,255,255,0.55);">Blog &amp; SNS Publish</div>
-              <div id="s2-sub4" style="font-size: 14px; color: rgba(255,255,255,0.3); margin-top: 2px;">채널 자동 배포</div>
-            </div>
-            <div style="position: relative; width: 68px; height: 26px;">
-              <span id="s2-wait4" style="
-                position: absolute; inset: 0;
-                display: flex; align-items: center; justify-content: center;
-                border-radius: 6px; background: rgba(255,255,255,0.06);
-                font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.3);
-              ">대기</span>
-              <span id="s2-run4" style="
-                position: absolute; inset: 0; opacity: 0;
-                display: flex; align-items: center; justify-content: center;
-                padding: 4px 10px; border-radius: 6px;
-                background: rgba(37,99,235,0.2); border: 1px solid rgba(37,99,235,0.5);
-                font-size: 13px; font-weight: 700; color: #93c5fd; white-space: nowrap;
-              ">실행 중</span>
-              <span id="s2-done4" style="
-                position: absolute; inset: 0; opacity: 0;
-                display: flex; align-items: center; justify-content: center;
-                padding: 4px 12px; border-radius: 6px;
-                background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3);
-                font-size: 13px; font-weight: 700; color: #4ade80;
-              ">완료</span>
-            </div>
-          </div>
-
-        </div><!-- /s2-steps -->
-      </div><!-- /s2 -->
-
-
-      <!-- ═══════════════════════════════════════════════════════════
-           SCENE 3 · FEATURE HIGHLIGHTS  (track 0 · 16 – 23 s)
-           ═══════════════════════════════════════════════════════════ -->
-      <div
-        id="s3"
-        data-start="16"
-        data-duration="7"
-        data-track-index="0"
-        style="
-          position: absolute; inset: 0;
-          display: flex; flex-direction: column; justify-content: center;
-          padding: 80px; overflow: hidden;
-        "
-      >
-        <div style="
-          position: absolute; right: -80px; bottom: -80px;
-          width: 520px; height: 520px;
-          background: radial-gradient(circle, rgba(37,99,235,0.13) 0%, transparent 70%);
-          pointer-events: none;
-        "></div>
-        <div style="
-          position: absolute; inset: 0;
-          background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
-          background-size: 56px 56px; pointer-events: none;
-        "></div>
-
-        <div id="s3-label" style="
-          font-size: 13px; font-weight: 700;
-          letter-spacing: 0.13em; text-transform: uppercase;
-          color: #93c5fd; margin-bottom: 18px;
-          display: flex; align-items: center; gap: 8px;
-          position: relative; z-index: 1;
-        ">
-          <span style="display:inline-block;width:18px;height:2px;background:#93c5fd;border-radius:2px;"></span>
-          Why This System
+        <div style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.38);text-align:right;line-height:1.65;max-width:400px;">
+          수작업으로 하던 포맷·업로드·배포를<br/>시스템이 자동으로 처리합니다
         </div>
+      </div>
 
-        <div id="s3-heading" style="
-          font-size: 62px; font-weight: 900; color: #ffffff;
-          line-height: 1.1; letter-spacing: -0.04em;
-          margin-bottom: 48px; position: relative; z-index: 1;
-          max-width: 800px;
-        ">반복되는 콘텐츠 운영을 더 빠르고 일관되게</div>
-
-        <div style="
-          display: grid; grid-template-columns: repeat(3, 1fr);
-          gap: 20px; position: relative; z-index: 1;
-        ">
-          <div id="s3-f1" style="
-            padding: 28px; border-radius: 14px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03);
-          ">
-            <div style="
-              font-size: 34px; font-weight: 900;
-              color: rgba(255,255,255,0.08); margin-bottom: 14px;
-              font-variant-numeric: tabular-nums;
-            ">01</div>
-            <div style="font-size: 21px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; max-width: 240px;">한 번의 작성, 여러 채널 운영</div>
-            <div style="font-size: 15px; color: rgba(255,255,255,0.42); line-height: 1.6; max-width: 260px;">반복 수작업을 줄이고 자동화 흐름으로 연결합니다.</div>
-          </div>
-
-          <div id="s3-f2" style="
-            padding: 28px; border-radius: 14px;
-            border: 1px solid rgba(37,99,235,0.3);
-            background: rgba(37,99,235,0.07);
-          ">
-            <div style="
-              font-size: 34px; font-weight: 900;
-              color: rgba(37,99,235,0.28); margin-bottom: 14px;
-              font-variant-numeric: tabular-nums;
-            ">02</div>
-            <div style="font-size: 21px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; max-width: 240px;">브랜드 톤 일관성 유지</div>
-            <div style="font-size: 15px; color: rgba(255,255,255,0.42); line-height: 1.6; max-width: 260px;">썸네일, 문구, 발행 방식을 하나의 규칙으로 통일합니다.</div>
-          </div>
-
-          <div id="s3-f3" style="
-            padding: 28px; border-radius: 14px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03);
-          ">
-            <div style="
-              font-size: 34px; font-weight: 900;
-              color: rgba(255,255,255,0.08); margin-bottom: 14px;
-              font-variant-numeric: tabular-nums;
-            ">03</div>
-            <div style="font-size: 21px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; max-width: 240px;">운영 속도 개선</div>
-            <div style="font-size: 15px; color: rgba(255,255,255,0.42); line-height: 1.6; max-width: 260px;">발행까지 걸리는 시간을 줄이고 더 꾸준하게 배포합니다.</div>
-          </div>
+      <div id="s3-r2" style="
+        display:flex; align-items:center; justify-content:space-between;
+        padding:26px 0; border-bottom:1px solid rgba(255,255,255,0.06);
+      ">
+        <div style="display:flex; align-items:baseline; gap:22px;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:rgba(255,255,255,0.2);">02</span>
+          <span style="font-size:42px;font-weight:700;color:#fff;letter-spacing:-0.03em;line-height:1.1;">브랜드 일관성</span>
         </div>
-      </div><!-- /s3 -->
+        <div style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.38);text-align:right;line-height:1.65;max-width:400px;">
+          썸네일·문구·발행 방식을<br/>하나의 규칙으로 자동 통일합니다
+        </div>
+      </div>
+
+      <div id="s3-r3" style="
+        display:flex; align-items:center; justify-content:space-between;
+        padding:26px 0;
+      ">
+        <div style="display:flex; align-items:baseline; gap:22px;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:rgba(255,255,255,0.2);">03</span>
+          <span style="font-size:42px;font-weight:700;color:#fff;letter-spacing:-0.03em;line-height:1.1;">발행 속도 향상</span>
+        </div>
+        <div style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.38);text-align:right;line-height:1.65;max-width:400px;">
+          작성 완료 즉시 전체 채널에<br/>빠르고 꾸준하게 배포됩니다
+        </div>
+      </div>
+    </div>
 
 
-      <!-- ═══════════════════════════════════════════════════════════
-           SCENE 4 · CTA OUTRO  (track 1 · 21 – 25 s)
-           ═══════════════════════════════════════════════════════════ -->
-      <div
-        id="s4"
-        data-start="21"
-        data-duration="4"
-        data-track-index="1"
-        style="
-          position: absolute; inset: 0;
-          display: flex; flex-direction: column;
-          align-items: center; justify-content: center;
-          gap: 26px; overflow: hidden;
-        "
-      >
-        <div id="s4-glow" style="
-          position: absolute; inset: 0;
-          background: radial-gradient(ellipse at center, rgba(37,99,235,0.24) 0%, transparent 65%);
-          pointer-events: none;
-        "></div>
+    <!-- ═══ SCENE 4 · CTA (track 1 · 21–25s) ═══ -->
+    <div
+      id="s4"
+      data-start="21" data-duration="4" data-track-index="1"
+      style="position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;"
+    >
+      <div id="s4-sub" style="
+        font-size:12px; font-weight:700; letter-spacing:0.24em;
+        text-transform:uppercase; color:rgba(255,255,255,0.25);
+        margin-bottom:28px;
+      ">Open Source · Free to use</div>
 
-        <div id="s4-logo" style="
-          width: 68px; height: 68px; border-radius: 16px;
-          background: #2563eb;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 26px; font-weight: 900; color: #fff;
-          position: relative; z-index: 1;
-          box-shadow: 0 0 44px rgba(37,99,235,0.5);
-        ">CA</div>
+      <div id="s4-title" style="
+        font-size:80px; font-weight:900; color:#fff;
+        letter-spacing:-0.05em; line-height:1.0;
+        text-align:center; margin-bottom:36px;
+      ">지금 시작하세요</div>
 
-        <div id="s4-title" style="
-          font-size: 58px; font-weight: 900; color: #ffffff;
-          line-height: 1.12; letter-spacing: -0.04em;
-          text-align: center; position: relative; z-index: 1;
-          max-width: 880px;
-        ">지금 바로 Star 하고, 운영 자동화를 시작하세요</div>
+      <div id="s4-rule" style="
+        width:0; height:1px; background:rgba(255,255,255,0.15);
+        margin-bottom:28px;
+      "></div>
 
-        <a id="s4-cta" style="
-          padding: 16px 44px; border-radius: 12px;
-          background: #ffffff;
-          font-size: 22px; font-weight: 700; color: #0d0d0d;
-          position: relative; z-index: 1;
-          display: flex; align-items: center; gap: 10px;
-          text-decoration: none; cursor: pointer;
-        ">⭐ Star on GitHub</a>
+      <div id="s4-url" style="
+        font-size:17px; font-weight:400; color:rgba(255,255,255,0.3);
+        letter-spacing:0.03em; margin-bottom:28px;
+      ">github.com/thisNorm/content-agent</div>
 
-        <div id="s4-url" style="
-          font-size: 17px; color: rgba(255,255,255,0.38);
-          position: relative; z-index: 1; letter-spacing: 0.02em;
-        ">github.com/thisNorm/content-agent</div>
+      <div id="s4-btn" style="
+        padding:16px 44px; border-radius:8px;
+        background:#fff; color:#0d0d0d;
+        font-size:17px; font-weight:700;
+        display:inline-flex; align-items:center; gap:10px;
+        letter-spacing:-0.01em;
+      ">⭐ GitHub에서 Star 하기</div>
 
-        <!-- fade-to-black overlay — final scene exit allowed -->
-        <div id="s4-fade" style="
-          position: absolute; inset: 0;
-          background: #000; opacity: 0;
-          pointer-events: none; z-index: 20;
-        "></div>
-      </div><!-- /s4 -->
+      <!-- fade-to-black overlay — final scene exit only -->
+      <div id="s4-fade" style="
+        position:absolute; inset:0;
+        background:#0d0d0d; opacity:0;
+        pointer-events:none; z-index:10;
+      "></div>
+    </div>
 
 
-      <!-- ═══════════════════════════════════════════════════════════
-           GSAP TIMELINE
-           ═══════════════════════════════════════════════════════════ -->
-      <script>
-        window.__timelines = window.__timelines || {};
-        const tl = gsap.timeline({ paused: true });
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
 
-        // ── SCENE 1 ────────────────────────────────────────────────
-        tl.from('#s1-dots',    { opacity: 0, duration: 1.4, ease: 'power1.inOut' },           0);
-        tl.from('#s1-line1',   { scaleX: 0, opacity: 0, duration: 1.2, ease: 'power2.out', transformOrigin: 'center' }, 0.2);
-        tl.from('#s1-line2',   { scaleY: 0, opacity: 0, duration: 1.2, ease: 'power2.out', transformOrigin: 'center' }, 0.2);
-        tl.from('#s1-glow',    { scale: 0.3, opacity: 0, duration: 1.6, ease: 'power2.out' }, 0);
-        tl.from('#s1-logo',    { scale: 0, opacity: 0, duration: 0.65, ease: 'back.out(1.7)' }, 0.5);
-        tl.from('#s1-title',   { y: 56, opacity: 0, duration: 0.75, ease: 'power3.out' },      0.85);
-        tl.from('#s1-sep',     { scaleX: 0, opacity: 0, duration: 0.5, ease: 'power2.out', transformOrigin: 'left' }, 1.25);
-        tl.from('#s1-tagline', { y: 32, opacity: 0, duration: 0.65, ease: 'expo.out' },        1.45);
-        tl.from('#s1-badge',   { y: 22, opacity: 0, duration: 0.5, ease: 'power2.out' },       1.85);
-        // ambient glow pulse (3 cycles × 2 s, fits within 8 s scene)
-        tl.to('#s1-glow',      { scale: 1.35, duration: 2.0, ease: 'power1.inOut', yoyo: true, repeat: 2 }, 1.5);
+      // ── SCENE 1 ───────────────────────────────────────────────────
+      tl.from('#s1-ey',   { opacity: 0, y: 10,   duration: 0.7, ease: 'power2.out' }, 0.3);
+      tl.from('#s1-t1',   { y: 130,              duration: 0.7, ease: 'power3.out' }, 0.65);
+      tl.from('#s1-t2',   { y: 130,              duration: 0.7, ease: 'power3.out' }, 0.9);
+      tl.to('#s1-rule',   { width: 340,           duration: 0.65, ease: 'power2.inOut' }, 1.5);
+      tl.from('#s1-tag',  { opacity: 0, y: 14,   duration: 0.65, ease: 'power2.out' }, 1.8);
 
-        // ── SCENE 2 entrances ──────────────────────────────────────
-        tl.from('#s2-label',   { x: -32, opacity: 0, duration: 0.5, ease: 'power2.out' },     7.4);
-        tl.from('#s2-heading', { x: -44, opacity: 0, duration: 0.7, ease: 'expo.out' },        7.6);
-        tl.from('#s2-desc',    { x: -22, opacity: 0, duration: 0.5, ease: 'power2.out' },     8.0);
-        tl.from('#s2-step1',   { x: 52, opacity: 0, duration: 0.5, ease: 'power3.out' },      7.7);
-        tl.from('#s2-step2',   { x: 52, opacity: 0, duration: 0.5, ease: 'power3.out' },      8.2);
-        tl.from('#s2-step3',   { x: 52, opacity: 0, duration: 0.5, ease: 'power3.out' },      8.7);
-        tl.from('#s2-step4',   { x: 52, opacity: 0, duration: 0.5, ease: 'power3.out' },      9.2);
-        // pulse on step 2 "실행 중" badge (10 beats × 0.7 s = 7 s, ends at t≈16.8)
-        tl.to('#s2-run2',      { opacity: 0.45, duration: 0.7, ease: 'power1.inOut', yoyo: true, repeat: 9 }, 9.8);
+      // ── SCENE 2 entrances ────────────────────────────────────────
+      tl.from('#s2-wf-label', { opacity: 0, y: 8, duration: 0.4, ease: 'power2.out' }, 7.4);
+      tl.from('#s2-label',    { opacity: 0, y: 8, duration: 0.4, ease: 'power2.out' }, 7.4);
+      tl.from('#s2-s1', { opacity: 0, x: -20, duration: 0.4, ease: 'power2.out' }, 7.55);
+      tl.from('#s2-s2', { opacity: 0, x: -20, duration: 0.4, ease: 'power2.out' }, 7.75);
+      tl.from('#s2-s3', { opacity: 0, x: -20, duration: 0.4, ease: 'power2.out' }, 7.95);
+      tl.from('#s2-s4', { opacity: 0, x: -20, duration: 0.4, ease: 'power2.out' }, 8.15);
+      tl.from('#s2-heading', { opacity: 0, x: 24, duration: 0.6, ease: 'power3.out' }, 7.6);
+      tl.from('#s2-desc',    { opacity: 0, y: 12, duration: 0.5, ease: 'power2.out' }, 8.0);
+      tl.from('#s2-counter', { opacity: 0, duration: 0.4 },                            8.0);
 
-        // ── SCENE 2: step 2 → done, step 3 → running (t = 11) ─────
-        tl.to(['#s2-run2', '#s2-wait3'],  { opacity: 0, duration: 0.28 }, 11.0);
-        tl.to(['#s2-done2', '#s2-run3'],  { opacity: 1, duration: 0.28 }, 11.0);
-        tl.to('#s2-step2',   { borderColor: 'rgba(34,197,94,0.35)', backgroundColor: 'rgba(34,197,94,0.07)', duration: 0.4 }, 11.0);
-        tl.to('#s2-num2',    { backgroundColor: 'rgba(34,197,94,0.55)', duration: 0.4 }, 11.0);
-        tl.to('#s2-step3',   { borderColor: 'rgba(37,99,235,0.4)', backgroundColor: 'rgba(37,99,235,0.09)', duration: 0.4 }, 11.0);
-        tl.to('#s2-num3',    { backgroundColor: '#2563eb', color: '#fff', duration: 0.4 }, 11.0);
-        tl.to('#s2-name3',   { color: '#fff', duration: 0.3 }, 11.0);
-        tl.to('#s2-sub3',    { color: 'rgba(255,255,255,0.48)', duration: 0.3 }, 11.0);
+      // ── SCENE 2 step highlight transitions ──────────────────────
+      // s1→s2 at t=9.5
+      tl.to(['#s2-h1','#s2-d1','#s2-idx1'], { color: 'rgba(255,255,255,0.22)', duration: 0.45 }, 9.5);
+      tl.to(['#s2-h2','#s2-idx2'],           { color: '#fff',                   duration: 0.45 }, 9.5);
+      tl.to('#s2-d2',                        { color: 'rgba(255,255,255,0.4)',   duration: 0.45 }, 9.5);
+      tl.call(() => { const el = document.getElementById('s2-counter'); if (el) el.textContent = '02 / 04'; }, [], 9.5);
+      // s2→s3 at t=12.0
+      tl.to(['#s2-h2','#s2-d2','#s2-idx2'], { color: 'rgba(255,255,255,0.22)', duration: 0.45 }, 12.0);
+      tl.to(['#s2-h3','#s2-idx3'],           { color: '#fff',                   duration: 0.45 }, 12.0);
+      tl.to('#s2-d3',                        { color: 'rgba(255,255,255,0.4)',   duration: 0.45 }, 12.0);
+      tl.call(() => { const el = document.getElementById('s2-counter'); if (el) el.textContent = '03 / 04'; }, [], 12.0);
+      // s3→s4 at t=14.5
+      tl.to(['#s2-h3','#s2-d3','#s2-idx3'], { color: 'rgba(255,255,255,0.22)', duration: 0.45 }, 14.5);
+      tl.to(['#s2-h4','#s2-idx4'],           { color: '#fff',                   duration: 0.45 }, 14.5);
+      tl.to('#s2-d4',                        { color: 'rgba(255,255,255,0.4)',   duration: 0.45 }, 14.5);
+      tl.call(() => { const el = document.getElementById('s2-counter'); if (el) el.textContent = '04 / 04'; }, [], 14.5);
 
-        // ── SCENE 2: step 3 → done, step 4 → running (t = 13.5) ───
-        tl.to(['#s2-run3', '#s2-wait4'],  { opacity: 0, duration: 0.28 }, 13.5);
-        tl.to(['#s2-done3', '#s2-run4'],  { opacity: 1, duration: 0.28 }, 13.5);
-        tl.to('#s2-step3',   { borderColor: 'rgba(34,197,94,0.35)', backgroundColor: 'rgba(34,197,94,0.07)', duration: 0.4 }, 13.5);
-        tl.to('#s2-num3',    { backgroundColor: 'rgba(34,197,94,0.55)', duration: 0.4 }, 13.5);
-        tl.to('#s2-step4',   { borderColor: 'rgba(37,99,235,0.4)', backgroundColor: 'rgba(37,99,235,0.09)', duration: 0.4 }, 13.5);
-        tl.to('#s2-num4',    { backgroundColor: '#2563eb', color: '#fff', duration: 0.4 }, 13.5);
-        tl.to('#s2-name4',   { color: '#fff', duration: 0.3 }, 13.5);
-        tl.to('#s2-sub4',    { color: 'rgba(255,255,255,0.48)', duration: 0.3 }, 13.5);
+      // ── SCENE 3 ──────────────────────────────────────────────────
+      tl.from('#s3-label', { opacity: 0, y: 8, duration: 0.4, ease: 'power2.out' }, 16.3);
+      tl.from('#s3-r1',    { opacity: 0, y: 22, duration: 0.5, ease: 'power3.out' }, 16.5);
+      tl.from('#s3-r2',    { opacity: 0, y: 22, duration: 0.5, ease: 'power3.out' }, 16.85);
+      tl.from('#s3-r3',    { opacity: 0, y: 22, duration: 0.5, ease: 'power3.out' }, 17.2);
 
-        // ── SCENE 2: step 4 → done (t = 16) ────────────────────────
-        tl.to('#s2-run4',    { opacity: 0, duration: 0.28 }, 16.0);
-        tl.to('#s2-done4',   { opacity: 1, duration: 0.28 }, 16.0);
-        tl.to('#s2-step4',   { borderColor: 'rgba(34,197,94,0.35)', backgroundColor: 'rgba(34,197,94,0.07)', duration: 0.4 }, 16.0);
-        tl.to('#s2-num4',    { backgroundColor: 'rgba(34,197,94,0.55)', duration: 0.4 }, 16.0);
+      // ── SCENE 4 ──────────────────────────────────────────────────
+      tl.from('#s4-sub',   { opacity: 0, y: 8, duration: 0.45, ease: 'power2.out' }, 21.3);
+      tl.from('#s4-title', { opacity: 0, y: 32, duration: 0.6, ease: 'power3.out' }, 21.6);
+      tl.to('#s4-rule',    { width: 240, duration: 0.5, ease: 'power2.inOut' },       22.1);
+      tl.from('#s4-url',   { opacity: 0, duration: 0.4, ease: 'power2.out' },         22.5);
+      tl.from('#s4-btn',   { opacity: 0, y: 14, duration: 0.48, ease: 'power2.out' }, 22.85);
+      tl.to('#s4-fade',    { opacity: 1, duration: 0.8, ease: 'power2.in' },          24.2);
 
-        // ── SCENE 3 ────────────────────────────────────────────────
-        tl.from('#s3-label',   { y: -22, opacity: 0, duration: 0.48, ease: 'power2.out' },    16.3);
-        tl.from('#s3-heading', { y: 44, opacity: 0, duration: 0.72, ease: 'power3.out' },     16.5);
-        tl.from('#s3-f1',      { y: 32, opacity: 0, duration: 0.55, ease: 'expo.out' },       17.1);
-        tl.from('#s3-f2',      { y: 32, opacity: 0, duration: 0.55, ease: 'expo.out' },       17.4);
-        tl.from('#s3-f3',      { y: 32, opacity: 0, duration: 0.55, ease: 'expo.out' },       17.7);
+      // ── Scene visibility — cross-fades with no overlap ────────────
+      tl.to('#s1',  { opacity: 0, duration: 0.3, ease: 'power1.in' }, 7.1);
+      tl.set('#s2', { opacity: 1 }, 7.38);
+      tl.to('#s2',  { opacity: 0, duration: 0.3, ease: 'power1.in' }, 16.0);
+      tl.set('#s3', { opacity: 1 }, 16.28);
+      tl.to('#s3',  { opacity: 0, duration: 0.3, ease: 'power1.in' }, 21.0);
+      tl.set('#s4', { opacity: 1 }, 21.18);
 
-        // ── SCENE 4 ────────────────────────────────────────────────
-        tl.from('#s4-glow',    { opacity: 0, duration: 0.8, ease: 'power2.out' },             21.2);
-        tl.from('#s4-logo',    { scale: 0, opacity: 0, duration: 0.55, ease: 'back.out(2)' }, 21.5);
-        tl.from('#s4-title',   { y: 44, opacity: 0, duration: 0.68, ease: 'power3.out' },     21.8);
-        tl.from('#s4-cta',     { scale: 0.85, opacity: 0, duration: 0.52, ease: 'back.out(1.7)' }, 22.4);
-        tl.from('#s4-url',     { opacity: 0, duration: 0.5, ease: 'power2.out' },             22.9);
-        // final fade-to-black (only final scene may have an exit animation)
-        tl.to('#s4-fade',      { opacity: 1, duration: 0.9, ease: 'power2.in' },              24.1);
+      window.__timelines['content-agent-promo'] = tl;
 
-        window.__timelines['content-agent-promo'] = tl;
+      if (typeof window.__hyperframes === 'undefined') {
+        tl.eventCallback('onComplete', function () {
+          // reset scene visibility
+          gsap.set('#s1', { opacity: 1 });
+          gsap.set(['#s2', '#s3', '#s4'], { opacity: 0 });
+          // reset step colors
+          gsap.set(['#s2-h1','#s2-idx1'], { color: '#fff' });
+          gsap.set('#s2-d1', { color: 'rgba(255,255,255,0.4)' });
+          gsap.set(['#s2-h2','#s2-h3','#s2-h4'], { color: 'rgba(255,255,255,0.3)' });
+          gsap.set(['#s2-idx2','#s2-idx3','#s2-idx4'], { color: 'rgba(255,255,255,0.18)' });
+          gsap.set(['#s2-d2','#s2-d3','#s2-d4'], { color: 'rgba(255,255,255,0.18)' });
+          const ct = document.getElementById('s2-counter');
+          if (ct) ct.textContent = '01 / 04';
+          tl.restart();
+        });
+        setTimeout(() => tl.play(), 250);
+      }
+    </script>
 
-        // Browser auto-play with seamless loop (skipped during HyperFrames render)
-        if (typeof window.__hyperframes === 'undefined') {
-          tl.eventCallback('onComplete', () => tl.restart());
-          setTimeout(() => tl.play(), 250);
-        }
-      </script>
-
-    </div><!-- /#comp -->
-  </body>
+  </div>
+</body>
 </html>

@@ -52,11 +52,15 @@ img{display:block;max-width:100%;}
 .strength-title,.strength-desc{color:#fff;}
 .strength-desc{color:rgba(255,255,255,.5);}
 
-.hero-section{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:96px 0 80px;}
+.hero-section{padding:96px 0 80px;text-align:center;}
+.hero-inner{display:flex;flex-direction:column;align-items:center;}
 .hero-label{font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-500);margin-bottom:22px;}
 h1{font-size:clamp(2.6rem,4.8vw,4.2rem);font-weight:900;line-height:1.08;letter-spacing:-.045em;color:var(--black);margin-bottom:24px;}
-.hero-desc{font-size:1.02rem;color:var(--gray-500);line-height:1.78;margin-bottom:36px;max-width:460px;}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;}
+.hero-desc{font-size:1.02rem;color:var(--gray-500);line-height:1.78;margin-bottom:36px;max-width:560px;}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
+
+.demo-section{padding:0 0 80px;background:#fff;}
+
 
 .hero-visual{position:relative;}
 .hero-card{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);}
@@ -159,7 +163,7 @@ h1{font-size:clamp(2.6rem,4.8vw,4.2rem);font-weight:900;line-height:1.08;letter-
 .cta-copy>p{font-size:.94rem;color:rgba(255,255,255,.5);}
 .cta-actions{display:flex;gap:12px;flex-shrink:0;}
 
-.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;justify-content:center;}
 .hero-meta img{height:24px;border-radius:4px;}
 
 .code-block{margin-bottom:48px;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-md);}
@@ -181,7 +185,7 @@ h1{font-size:clamp(2.6rem,4.8vw,4.2rem);font-weight:900;line-height:1.08;letter-
   .strength-grid{grid-template-columns:1fr;}
 }
 @media(max-width:860px){
-  .hero-section{grid-template-columns:1fr;padding:60px 0 48px;gap:40px;}
+  .hero-section{padding:60px 0 48px;}
   .cta-inner{flex-direction:column;align-items:flex-start;padding:40px 32px;}
   .cta-actions{flex-direction:column;width:100%;}
   .cta-actions .btn{width:100%;justify-content:center;}

@@ -21,10 +21,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
     <main>
       <!-- HERO -->
-      <section class="hero-section page-shell" id="hero">
-        <div class="hero-copy">
+      <section class="hero-section" id="hero">
+        <div class="page-shell hero-inner">
           <p class="hero-label">콘텐츠 운영 자동화 시스템</p>
-          <h1>노션에<br/>글만 쓰면,<br/>나머지는 시스템이 합니다</h1>
+          <h1>노션에 글만 쓰면,<br/>나머지는 시스템이 합니다</h1>
           <p class="hero-desc">Notion 초안 하나로 블로그 포스팅·썸네일·SNS 배포가 한 흐름으로 연결됩니다. 반복되는 운영 업무를 줄이고, 콘텐츠 본연에 집중하세요.</p>
           <div class="hero-actions">
             <a class="btn btn-dark btn-lg" href="https://github.com/thisNorm/content-agent" target="_blank" rel="noreferrer">⭐ GitHub에서 Star 하기</a>
@@ -37,8 +37,11 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <img src="https://img.shields.io/badge/Notion_API-latest-0d0d0d?style=flat&labelColor=f5f5f5" alt="Notion API" height="24" />
           </div>
         </div>
+      </section>
 
-        <div class="hero-visual">
+      <!-- DEMO VIDEO -->
+      <section class="demo-section">
+        <div class="page-shell">
           <div class="video-wrap" id="video-wrap">
             <iframe
               src="/video/index.html"
@@ -46,7 +49,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
               sandbox="allow-scripts allow-same-origin"
             ></iframe>
           </div>
-          <p class="video-caption">실시간 파이프라인 애니메이션 데모</p>
         </div>
       </section>
 
