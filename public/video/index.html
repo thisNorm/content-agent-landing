@@ -2,353 +2,609 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Agent — Demo</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <title>Content Agent — 실제 운영 사례</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 1280px; height: 720px; overflow: hidden; background: #0d0d0d; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:1280px; height:720px; overflow:hidden; background:#0d0d0d; font-family:'Noto Sans KR',-apple-system,sans-serif; }
+
+    /* ── COMMON ── */
+    .scene { position:absolute; inset:0; width:1280px; height:720px; overflow:hidden; }
+
+    /* ── SCENE 1: NOTION ── */
+    #s1 { background:#fff; }
+    .nb { /* notion sidebar */
+      position:absolute; left:0; top:0; bottom:0; width:232px;
+      background:#f7f7f5; border-right:1px solid #e9e9e7;
+      padding:0;
+    }
+    .nb-ws {
+      display:flex; align-items:center; gap:9px;
+      padding:14px 16px; border-bottom:1px solid #e9e9e7;
+    }
+    .nb-ws-mark {
+      width:26px; height:26px; border-radius:6px;
+      background:#0d0d0d; color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; font-weight:900; flex-shrink:0;
+    }
+    .nb-ws-name { font-size:13px; font-weight:700; color:#37352f; }
+    .nb-section { padding:8px 0 4px; }
+    .nb-section-title {
+      font-size:11px; font-weight:600; color:#9b9a97;
+      letter-spacing:0.04em; padding:2px 16px 4px;
+    }
+    .nb-item {
+      display:flex; align-items:center; gap:7px;
+      padding:5px 16px; font-size:13px; color:#6b6b6b; cursor:pointer;
+    }
+    .nb-item.active { background:rgba(0,0,0,0.07); color:#37352f; font-weight:600; border-radius:4px; margin:0 6px; padding:5px 10px; }
+    .nb-item-icon { font-size:13px; flex-shrink:0; }
+    .nb-item-badge {
+      margin-left:auto; font-size:10px;
+      background:#ff6b35; color:#fff;
+      padding:1px 6px; border-radius:10px; font-weight:700;
+    }
+
+    /* Notion topbar */
+    .nt {
+      position:absolute; left:232px; top:0; right:0; height:44px;
+      display:flex; align-items:center; padding:0 24px;
+      border-bottom:1px solid #e9e9e7; gap:6px;
+    }
+    .nt-crumb { font-size:12.5px; color:#9b9a97; display:flex; align-items:center; gap:5px; }
+    .nt-crumb span.active { color:#37352f; font-weight:500; }
+    .nt-actions {
+      margin-left:auto; display:flex; gap:10px;
+    }
+    .nt-btn {
+      font-size:12px; padding:4px 10px; border-radius:5px;
+      border:1px solid #e9e9e7; color:#6b6b6b; cursor:pointer;
+      background:#fff;
+    }
+    .nt-btn.primary { background:#0d0d0d; color:#fff; border-color:#0d0d0d; }
+
+    /* Notion main */
+    .nm {
+      position:absolute; left:232px; top:44px; right:0; bottom:0;
+      overflow:hidden; background:#fff;
+      padding:52px 96px;
+    }
+    .n-emoji { font-size:46px; line-height:1; margin-bottom:12px; display:block; }
+    .n-title { font-size:38px; font-weight:800; color:#37352f; line-height:1.18; letter-spacing:-0.02em; margin-bottom:6px; }
+    .n-meta { font-size:12px; color:#b0afac; margin-bottom:28px; display:flex; align-items:center; gap:12px; }
+    .n-meta-tag {
+      padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600;
+      background:#fff3cd; color:#92400e;
+    }
+    .n-divider { height:1px; background:#e9e9e7; margin-bottom:22px; }
+    .n-body { font-size:14.5px; color:#37352f; line-height:1.78; }
+    .n-body p { margin-bottom:8px; }
+    .n-body strong { font-weight:700; }
+    .n-bullet { display:flex; align-items:flex-start; gap:9px; margin-bottom:5px; font-size:14.5px; color:#37352f; line-height:1.7; }
+    .n-dot { width:5px; height:5px; border-radius:50%; background:#9b9a97; margin-top:9px; flex-shrink:0; }
+    .n-code { background:#f7f7f5; border:1px solid #e9e9e7; border-radius:3px; padding:1px 5px; font-family:'SFMono-Regular',monospace; font-size:13px; color:#eb5757; }
+    .n-scene-tag {
+      position:absolute; top:56px; right:24px;
+      font-size:10px; font-weight:700; letter-spacing:0.12em; color:#c4c2bf;
+      text-transform:uppercase;
+    }
+
+    /* ── SCENE 2: PIPELINE ── */
+    #s2 { background:#0d0d0d; }
+    .p-wrap {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      padding:52px 80px 52px;
+    }
+    .p-header { margin-bottom:32px; }
+    .p-eyebrow { font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:8px; }
+    .p-title { font-size:28px; font-weight:800; color:#fff; letter-spacing:-0.02em; line-height:1.2; }
+    .p-sub { font-size:14px; color:rgba(255,255,255,0.4); margin-top:6px; }
+
+    .p-steps { display:flex; flex-direction:column; gap:12px; flex:1; }
+    .p-step {
+      display:flex; align-items:center; gap:18px;
+      padding:18px 22px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:10px; opacity:0;
+    }
+    .p-step.visible { opacity:1; }
+    .p-icon {
+      width:38px; height:38px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:15px; flex-shrink:0;
+    }
+    .p-icon.wait { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.25); font-size:12px; font-weight:700; }
+    .p-icon.run  { background:rgba(37,99,235,0.18); border:1.5px solid #2563eb; }
+    .p-icon.done { background:rgba(22,163,74,0.18); border:1.5px solid #16a34a; color:#16a34a; font-size:16px; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .spinner { width:14px; height:14px; border:2px solid rgba(37,99,235,0.3); border-top-color:#2563eb; border-radius:50%; animation:spin 0.8s linear infinite; }
+
+    .p-info { flex:1; }
+    .p-name { font-size:15px; font-weight:600; color:#fff; margin-bottom:3px; }
+    .p-detail { font-size:12px; color:rgba(255,255,255,0.38); }
+    .p-time { font-size:12px; color:rgba(255,255,255,0.28); font-family:'SFMono-Regular',monospace; }
+
+    .p-footer { margin-top:22px; }
+    .p-progress-labels { display:flex; justify-content:space-between; margin-bottom:8px; }
+    .p-progress-label { font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.3); }
+    .p-progress-pct { font-size:11px; color:rgba(255,255,255,0.5); font-family:'SFMono-Regular',monospace; }
+    .p-bar-bg { height:3px; background:rgba(255,255,255,0.07); border-radius:2px; overflow:hidden; }
+    .p-bar { height:100%; background:#2563eb; border-radius:2px; width:0%; }
+
+    /* ── SCENE 3: TISTORY ── */
+    #s3 { background:#f0f0ef; }
+    .b-chrome {
+      position:absolute; top:0; left:0; right:0; height:50px;
+      background:#e8e8e6; border-bottom:1px solid #d0d0ce;
+      display:flex; align-items:center; gap:12px; padding:0 18px;
+    }
+    .b-dots { display:flex; gap:6px; }
+    .b-dot { width:12px; height:12px; border-radius:50%; }
+    .b-dot.r { background:#ff5f57; } .b-dot.y { background:#ffbd2e; } .b-dot.g { background:#28c840; }
+    .b-url {
+      flex:1; max-width:520px; margin:0 auto;
+      height:28px; background:#fff; border-radius:6px; border:1px solid #ccc;
+      display:flex; align-items:center; padding:0 10px; gap:5px;
+      font-size:12px; color:#555;
+    }
+    .b-lock { font-size:10px; color:#888; }
+    .b-content {
+      position:absolute; top:50px; left:0; right:0; bottom:0;
+      background:#fff; overflow:hidden;
+    }
+    .b-inner { max-width:720px; margin:0 auto; padding:44px 32px; }
+    .t-category {
+      font-size:11.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+      color:#ff6b35; margin-bottom:12px;
+    }
+    .t-title { font-size:28px; font-weight:800; color:#1a1a1a; line-height:1.3; margin-bottom:14px; letter-spacing:-0.02em; }
+    .t-meta {
+      display:flex; align-items:center; gap:12px; font-size:12.5px; color:#999;
+      padding-bottom:20px; border-bottom:1px solid #eee; margin-bottom:22px;
+    }
+    .t-meta-sep { color:#ddd; }
+    .t-body { font-size:15.5px; color:#333; line-height:1.85; }
+    .t-body p { margin-bottom:12px; }
+    .t-h2 { font-size:20px; font-weight:700; color:#1a1a1a; margin:24px 0 10px; letter-spacing:-0.01em; }
+    .t-callout {
+      background:#fff8f5; border-left:3px solid #ff6b35;
+      padding:12px 16px; border-radius:0 6px 6px 0;
+      font-size:13.5px; color:#555; margin:14px 0;
+    }
+    .t-tags { display:flex; gap:7px; flex-wrap:wrap; margin-top:20px; }
+    .t-tag { padding:4px 11px; background:#f5f5f5; border-radius:4px; font-size:11.5px; color:#666; }
+
+    /* ── SCENE 4: X ── */
+    #s4 { background:#000; }
+    .x-sidebar {
+      position:absolute; left:0; top:0; bottom:0; width:260px;
+      padding:20px 16px;
+      border-right:1px solid rgba(255,255,255,0.08);
+    }
+    .x-logo { font-size:26px; font-weight:900; color:#fff; margin-bottom:22px; padding-left:6px; }
+    .x-nav { display:flex; flex-direction:column; gap:2px; }
+    .x-nav-item {
+      display:flex; align-items:center; gap:14px;
+      padding:10px 12px; border-radius:30px;
+      font-size:17px; color:rgba(255,255,255,0.65); cursor:pointer;
+    }
+    .x-nav-item.active { color:#fff; font-weight:700; }
+    .x-nav-icon { font-size:20px; }
+    .x-main {
+      position:absolute; left:260px; top:0; right:320px; bottom:0;
+      border-right:1px solid rgba(255,255,255,0.08); overflow:hidden;
+    }
+    .x-main-header {
+      height:50px; border-bottom:1px solid rgba(255,255,255,0.08);
+      display:flex; align-items:center; padding:0 18px;
+      font-size:18px; font-weight:800; color:#fff;
+    }
+    .x-tweet {
+      padding:16px 18px; border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+    .x-tweet-header { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .x-avatar {
+      width:40px; height:40px; border-radius:50%;
+      background:linear-gradient(135deg,#2563eb,#7c3aed);
+      display:flex; align-items:center; justify-content:center;
+      font-size:15px; font-weight:900; color:#fff; flex-shrink:0;
+    }
+    .x-name { font-size:15px; font-weight:700; color:#fff; line-height:1.2; }
+    .x-handle { font-size:13px; color:rgba(255,255,255,0.5); }
+    .x-body { font-size:15px; color:#fff; line-height:1.6; margin-bottom:12px; }
+    .x-body a { color:#1d9bf0; }
+    .x-preview {
+      border:1px solid rgba(255,255,255,0.12); border-radius:14px;
+      overflow:hidden; margin-bottom:12px;
+    }
+    .x-preview-thumb {
+      height:130px;
+      background:linear-gradient(135deg,#1e3a5f 0%,#0d0d0d 100%);
+      display:flex; align-items:center; justify-content:center;
+      font-size:32px;
+    }
+    .x-preview-body { padding:10px 14px; background:rgba(255,255,255,0.03); }
+    .x-preview-domain { font-size:12px; color:rgba(255,255,255,0.45); margin-bottom:2px; }
+    .x-preview-title { font-size:14px; font-weight:600; color:#fff; }
+    .x-actions { display:flex; gap:24px; }
+    .x-action { display:flex; align-items:center; gap:5px; font-size:13px; color:rgba(255,255,255,0.45); }
+    .x-right {
+      position:absolute; right:0; top:0; bottom:0; width:320px;
+      padding:14px 16px;
+    }
+    .x-search {
+      height:38px; background:rgba(255,255,255,0.07); border-radius:20px;
+      display:flex; align-items:center; padding:0 14px; gap:8px;
+      font-size:14px; color:rgba(255,255,255,0.38); margin-bottom:14px;
+    }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 </head>
 <body>
-  <!--
-    HyperFrames composition — Content Agent
-    Duration: 25s | 1280×720
-    Render: npx hyperframes render public/video/index.html -o public/demo.mp4
-  -->
-  <div
-    id="comp"
-    data-composition-id="content-agent-promo"
-    data-start="0"
-    data-duration="25"
-    data-width="1280"
-    data-height="720"
-    style="
-      width:1280px; height:720px;
-      position:relative; overflow:hidden;
-      background:#0d0d0d;
-      font-family:'Noto Sans KR', system-ui, sans-serif;
-    "
-  >
+<div data-composition-id="ca-real-demo" style="width:1280px;height:720px;position:relative;overflow:hidden;">
 
-    <!-- ═══ SCENE 1 · BRAND INTRO (track 0 · 0–8s) ═══ -->
-    <div
-      id="s1"
-      data-start="0" data-duration="8" data-track-index="0"
-      style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;"
-    >
-      <!-- eyebrow -->
-      <div id="s1-ey" style="
-        font-size:12px; font-weight:700; letter-spacing:0.26em;
-        text-transform:uppercase; color:rgba(255,255,255,0.28);
-        margin-bottom:40px;
-      ">Content Automation System</div>
-
-      <!-- title lines — overflow:hidden clips the slide-up -->
-      <div style="overflow:hidden; line-height:0.88;">
-        <div id="s1-t1" style="
-          font-size:128px; font-weight:900; color:#fff;
-          letter-spacing:-0.052em; line-height:0.88;
-        ">Content</div>
+  <!-- ── SCENE 1: NOTION DRAFT ── -->
+  <div id="s1" class="scene">
+    <!-- Sidebar -->
+    <div class="nb">
+      <div class="nb-ws">
+        <div class="nb-ws-mark">CA</div>
+        <div class="nb-ws-name">Content Agent</div>
       </div>
-      <div style="overflow:hidden; line-height:0.88; margin-bottom:44px;">
-        <div id="s1-t2" style="
-          font-size:128px; font-weight:900; color:#fff;
-          letter-spacing:-0.052em; line-height:0.88;
-        ">Agent</div>
-      </div>
-
-      <!-- thin rule -->
-      <div id="s1-rule" style="
-        height:1px; width:0; background:rgba(255,255,255,0.16);
-        margin-bottom:30px;
-      "></div>
-
-      <!-- tagline -->
-      <div id="s1-tag" style="
-        font-size:21px; font-weight:300; color:rgba(255,255,255,0.48);
-        letter-spacing:0.01em; line-height:1.55; text-align:center;
-      ">노션에 글만 쓰면, 나머지는 시스템이 합니다</div>
-    </div>
-
-
-    <!-- ═══ SCENE 2 · PIPELINE (track 1 · 7–17s) ═══ -->
-    <div
-      id="s2"
-      data-start="7" data-duration="10" data-track-index="1"
-      style="position:absolute;inset:0;opacity:0;display:flex;"
-    >
-      <!-- left: step list -->
-      <div style="
-        width:520px; flex-shrink:0;
-        padding:80px 72px;
-        border-right:1px solid rgba(255,255,255,0.06);
-        display:flex; flex-direction:column; justify-content:center;
-      ">
-        <div id="s2-wf-label" style="
-          font-size:11px; font-weight:700; letter-spacing:0.2em;
-          text-transform:uppercase; color:rgba(255,255,255,0.22);
-          margin-bottom:44px;
-        ">Workflow</div>
-
-        <!-- step rows -->
-        <div id="s2-s1" style="display:flex; gap:18px; align-items:flex-start; margin-bottom:30px;">
-          <div style="padding-top:4px; flex-shrink:0;">
-            <div id="s2-idx1" style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.5);">01</div>
-          </div>
-          <div>
-            <div id="s2-h1" style="font-size:21px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:5px;">Notion 초안 작성</div>
-            <div id="s2-d1" style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.4);line-height:1.5;">평소처럼 노션에 글만 씁니다</div>
-          </div>
+      <div class="nb-section">
+        <div class="nb-section-title">워크스페이스</div>
+        <div class="nb-item active">
+          <span class="nb-item-icon">🐳</span>
+          Docker 개념 정리
+          <span class="nb-item-badge">발행 대기</span>
         </div>
-
-        <div id="s2-s2" style="display:flex; gap:18px; align-items:flex-start; margin-bottom:30px;">
-          <div style="padding-top:4px; flex-shrink:0;">
-            <div id="s2-idx2" style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.18);">02</div>
-          </div>
-          <div>
-            <div id="s2-h2" style="font-size:21px;font-weight:700;color:rgba(255,255,255,0.3);line-height:1.25;margin-bottom:5px;">콘텐츠 자동 가공</div>
-            <div id="s2-d2" style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.18);line-height:1.5;">발행 스타일에 맞게 자동 정리</div>
-          </div>
-        </div>
-
-        <div id="s2-s3" style="display:flex; gap:18px; align-items:flex-start; margin-bottom:30px;">
-          <div style="padding-top:4px; flex-shrink:0;">
-            <div id="s2-idx3" style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.18);">03</div>
-          </div>
-          <div>
-            <div id="s2-h3" style="font-size:21px;font-weight:700;color:rgba(255,255,255,0.3);line-height:1.25;margin-bottom:5px;">썸네일 자동 생성</div>
-            <div id="s2-d3" style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.18);line-height:1.5;">브랜드 톤에 맞는 이미지 완성</div>
-          </div>
-        </div>
-
-        <div id="s2-s4" style="display:flex; gap:18px; align-items:flex-start;">
-          <div style="padding-top:4px; flex-shrink:0;">
-            <div id="s2-idx4" style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.18);">04</div>
-          </div>
-          <div>
-            <div id="s2-h4" style="font-size:21px;font-weight:700;color:rgba(255,255,255,0.3);line-height:1.25;margin-bottom:5px;">블로그·SNS 자동 배포</div>
-            <div id="s2-d4" style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.18);line-height:1.5;">여러 채널에 동시 발행</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- right: heading + counter -->
-      <div style="
-        flex:1; padding:80px 80px;
-        display:flex; flex-direction:column; justify-content:center;
-      ">
-        <div id="s2-label" style="
-          font-size:11px; font-weight:700; letter-spacing:0.2em;
-          text-transform:uppercase; color:rgba(255,255,255,0.22);
-          margin-bottom:32px;
-        ">Automation Pipeline</div>
-
-        <div id="s2-heading" style="
-          font-size:68px; font-weight:900; color:#fff;
-          line-height:1.06; letter-spacing:-0.045em;
-          margin-bottom:24px;
-        ">4단계<br/>자동화<br/>파이프라인</div>
-
-        <div id="s2-desc" style="
-          font-size:18px; font-weight:300; color:rgba(255,255,255,0.36);
-          line-height:1.7;
-        ">Notion 초안 하나로<br/>발행까지 자동 완성됩니다</div>
-
-        <!-- step counter -->
-        <div id="s2-counter" style="
-          margin-top:52px;
-          font-size:52px; font-weight:900;
-          color:rgba(255,255,255,0.07);
-          letter-spacing:-0.04em; line-height:1;
-        ">01 / 04</div>
+        <div class="nb-item"><span class="nb-item-icon">📝</span>Kubernetes 입문</div>
+        <div class="nb-item"><span class="nb-item-icon">🚀</span>CI/CD 파이프라인</div>
+        <div class="nb-item"><span class="nb-item-icon">☁️</span>AWS ECS 배포</div>
       </div>
     </div>
 
-
-    <!-- ═══ SCENE 3 · BENEFITS (track 0 · 16–23s) ═══ -->
-    <div
-      id="s3"
-      data-start="16" data-duration="7" data-track-index="0"
-      style="position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;justify-content:center;padding:80px 96px;"
-    >
-      <div id="s3-label" style="
-        font-size:11px; font-weight:700; letter-spacing:0.2em;
-        text-transform:uppercase; color:rgba(255,255,255,0.22);
-        margin-bottom:52px;
-      ">Why Content Agent</div>
-
-      <div id="s3-r1" style="
-        display:flex; align-items:center; justify-content:space-between;
-        padding:26px 0; border-bottom:1px solid rgba(255,255,255,0.06);
-      ">
-        <div style="display:flex; align-items:baseline; gap:22px;">
-          <span style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:rgba(255,255,255,0.2);">01</span>
-          <span style="font-size:42px;font-weight:700;color:#fff;letter-spacing:-0.03em;line-height:1.1;">반복 업무 제거</span>
-        </div>
-        <div style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.38);text-align:right;line-height:1.65;max-width:400px;">
-          수작업으로 하던 포맷·업로드·배포를<br/>시스템이 자동으로 처리합니다
-        </div>
+    <!-- Topbar -->
+    <div class="nt">
+      <div class="nt-crumb">
+        <span>Content Agent</span>
+        <span>›</span>
+        <span class="active">🐳 Docker 개념 정리</span>
       </div>
-
-      <div id="s3-r2" style="
-        display:flex; align-items:center; justify-content:space-between;
-        padding:26px 0; border-bottom:1px solid rgba(255,255,255,0.06);
-      ">
-        <div style="display:flex; align-items:baseline; gap:22px;">
-          <span style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:rgba(255,255,255,0.2);">02</span>
-          <span style="font-size:42px;font-weight:700;color:#fff;letter-spacing:-0.03em;line-height:1.1;">브랜드 일관성</span>
-        </div>
-        <div style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.38);text-align:right;line-height:1.65;max-width:400px;">
-          썸네일·문구·발행 방식을<br/>하나의 규칙으로 자동 통일합니다
-        </div>
-      </div>
-
-      <div id="s3-r3" style="
-        display:flex; align-items:center; justify-content:space-between;
-        padding:26px 0;
-      ">
-        <div style="display:flex; align-items:baseline; gap:22px;">
-          <span style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:rgba(255,255,255,0.2);">03</span>
-          <span style="font-size:42px;font-weight:700;color:#fff;letter-spacing:-0.03em;line-height:1.1;">발행 속도 향상</span>
-        </div>
-        <div style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.38);text-align:right;line-height:1.65;max-width:400px;">
-          작성 완료 즉시 전체 채널에<br/>빠르고 꾸준하게 배포됩니다
-        </div>
+      <div class="nt-actions">
+        <div class="nt-btn">공유</div>
+        <div class="nt-btn primary">발행 →</div>
       </div>
     </div>
 
-
-    <!-- ═══ SCENE 4 · CTA (track 1 · 21–25s) ═══ -->
-    <div
-      id="s4"
-      data-start="21" data-duration="4" data-track-index="1"
-      style="position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;"
-    >
-      <div id="s4-sub" style="
-        font-size:12px; font-weight:700; letter-spacing:0.24em;
-        text-transform:uppercase; color:rgba(255,255,255,0.25);
-        margin-bottom:28px;
-      ">Open Source · Free to use</div>
-
-      <div id="s4-title" style="
-        font-size:80px; font-weight:900; color:#fff;
-        letter-spacing:-0.05em; line-height:1.0;
-        text-align:center; margin-bottom:36px;
-      ">지금 시작하세요</div>
-
-      <div id="s4-rule" style="
-        width:0; height:1px; background:rgba(255,255,255,0.15);
-        margin-bottom:28px;
-      "></div>
-
-      <div id="s4-url" style="
-        font-size:17px; font-weight:400; color:rgba(255,255,255,0.3);
-        letter-spacing:0.03em; margin-bottom:28px;
-      ">github.com/thisNorm/content-agent</div>
-
-      <div id="s4-btn" style="
-        padding:16px 44px; border-radius:8px;
-        background:#fff; color:#0d0d0d;
-        font-size:17px; font-weight:700;
-        display:inline-flex; align-items:center; gap:10px;
-        letter-spacing:-0.01em;
-      ">⭐ GitHub에서 Star 하기</div>
-
-      <!-- fade-to-black overlay — final scene exit only -->
-      <div id="s4-fade" style="
-        position:absolute; inset:0;
-        background:#0d0d0d; opacity:0;
-        pointer-events:none; z-index:10;
-      "></div>
+    <!-- Main -->
+    <div class="nm">
+      <span id="n-emoji" class="n-emoji">🐳</span>
+      <div id="n-title" class="n-title">Docker 개념 정리</div>
+      <div id="n-meta" class="n-meta">
+        <span class="n-meta-tag">초안</span>
+        <span>thisnorm</span>
+        <span>·</span>
+        <span>오늘 작성</span>
+      </div>
+      <div class="n-divider"></div>
+      <div id="n-body" class="n-body">
+        <p>Docker를 처음 공부할 때는 용어가 한꺼번에 쏟아져서 흐름이 잘 보이지 않음.<br/>핵심 개념과 명령어 위주로 한 번에 정리.</p>
+        <br/>
+        <p><strong>Dockerfile이란?</strong></p>
+        <div class="n-bullet"><div class="n-dot"></div><span>이미지를 <strong>재현 가능하게</strong> 만드는 선언 파일</span></div>
+        <div class="n-bullet"><div class="n-dot"></div><span>요리 레시피처럼 — 재료·순서·실행 명령을 한 파일에 명시</span></div>
+        <div class="n-bullet"><div class="n-dot"></div><span><span class="n-code">docker commit</span> 방식은 재현·협업·자동화 불가 → Dockerfile로 해결</span></div>
+        <br/>
+        <p><strong>필요한 이유 3가지</strong></p>
+        <div class="n-bullet"><div class="n-dot"></div><span>재현 가능 — 누구든 동일 이미지 생성</span></div>
+        <div class="n-bullet"><div class="n-dot"></div><span>협업 가능 — Git으로 버전 관리 & 팀 공유</span></div>
+        <div class="n-bullet"><div class="n-dot"></div><span>자동화 가능 — CI/CD 파이프라인에서 자동 빌드</span></div>
+      </div>
     </div>
-
-
-    <script>
-      window.__timelines = window.__timelines || {};
-      const tl = gsap.timeline({ paused: true });
-
-      // ── SCENE 1 ───────────────────────────────────────────────────
-      tl.from('#s1-ey',   { opacity: 0, y: 10,   duration: 0.7, ease: 'power2.out' }, 0.3);
-      tl.from('#s1-t1',   { y: 130,              duration: 0.7, ease: 'power3.out' }, 0.65);
-      tl.from('#s1-t2',   { y: 130,              duration: 0.7, ease: 'power3.out' }, 0.9);
-      tl.to('#s1-rule',   { width: 340,           duration: 0.65, ease: 'power2.inOut' }, 1.5);
-      tl.from('#s1-tag',  { opacity: 0, y: 14,   duration: 0.65, ease: 'power2.out' }, 1.8);
-
-      // ── SCENE 2 entrances ────────────────────────────────────────
-      tl.from('#s2-wf-label', { opacity: 0, y: 8, duration: 0.4, ease: 'power2.out' }, 7.4);
-      tl.from('#s2-label',    { opacity: 0, y: 8, duration: 0.4, ease: 'power2.out' }, 7.4);
-      tl.from('#s2-s1', { opacity: 0, x: -20, duration: 0.4, ease: 'power2.out' }, 7.55);
-      tl.from('#s2-s2', { opacity: 0, x: -20, duration: 0.4, ease: 'power2.out' }, 7.75);
-      tl.from('#s2-s3', { opacity: 0, x: -20, duration: 0.4, ease: 'power2.out' }, 7.95);
-      tl.from('#s2-s4', { opacity: 0, x: -20, duration: 0.4, ease: 'power2.out' }, 8.15);
-      tl.from('#s2-heading', { opacity: 0, x: 24, duration: 0.6, ease: 'power3.out' }, 7.6);
-      tl.from('#s2-desc',    { opacity: 0, y: 12, duration: 0.5, ease: 'power2.out' }, 8.0);
-      tl.from('#s2-counter', { opacity: 0, duration: 0.4 },                            8.0);
-
-      // ── SCENE 2 step highlight transitions ──────────────────────
-      // s1→s2 at t=9.5
-      tl.to(['#s2-h1','#s2-d1','#s2-idx1'], { color: 'rgba(255,255,255,0.22)', duration: 0.45 }, 9.5);
-      tl.to(['#s2-h2','#s2-idx2'],           { color: '#fff',                   duration: 0.45 }, 9.5);
-      tl.to('#s2-d2',                        { color: 'rgba(255,255,255,0.4)',   duration: 0.45 }, 9.5);
-      tl.call(() => { const el = document.getElementById('s2-counter'); if (el) el.textContent = '02 / 04'; }, [], 9.5);
-      // s2→s3 at t=12.0
-      tl.to(['#s2-h2','#s2-d2','#s2-idx2'], { color: 'rgba(255,255,255,0.22)', duration: 0.45 }, 12.0);
-      tl.to(['#s2-h3','#s2-idx3'],           { color: '#fff',                   duration: 0.45 }, 12.0);
-      tl.to('#s2-d3',                        { color: 'rgba(255,255,255,0.4)',   duration: 0.45 }, 12.0);
-      tl.call(() => { const el = document.getElementById('s2-counter'); if (el) el.textContent = '03 / 04'; }, [], 12.0);
-      // s3→s4 at t=14.5
-      tl.to(['#s2-h3','#s2-d3','#s2-idx3'], { color: 'rgba(255,255,255,0.22)', duration: 0.45 }, 14.5);
-      tl.to(['#s2-h4','#s2-idx4'],           { color: '#fff',                   duration: 0.45 }, 14.5);
-      tl.to('#s2-d4',                        { color: 'rgba(255,255,255,0.4)',   duration: 0.45 }, 14.5);
-      tl.call(() => { const el = document.getElementById('s2-counter'); if (el) el.textContent = '04 / 04'; }, [], 14.5);
-
-      // ── SCENE 3 ──────────────────────────────────────────────────
-      tl.from('#s3-label', { opacity: 0, y: 8, duration: 0.4, ease: 'power2.out' }, 16.3);
-      tl.from('#s3-r1',    { opacity: 0, y: 22, duration: 0.5, ease: 'power3.out' }, 16.5);
-      tl.from('#s3-r2',    { opacity: 0, y: 22, duration: 0.5, ease: 'power3.out' }, 16.85);
-      tl.from('#s3-r3',    { opacity: 0, y: 22, duration: 0.5, ease: 'power3.out' }, 17.2);
-
-      // ── SCENE 4 ──────────────────────────────────────────────────
-      tl.from('#s4-sub',   { opacity: 0, y: 8, duration: 0.45, ease: 'power2.out' }, 21.3);
-      tl.from('#s4-title', { opacity: 0, y: 32, duration: 0.6, ease: 'power3.out' }, 21.6);
-      tl.to('#s4-rule',    { width: 240, duration: 0.5, ease: 'power2.inOut' },       22.1);
-      tl.from('#s4-url',   { opacity: 0, duration: 0.4, ease: 'power2.out' },         22.5);
-      tl.from('#s4-btn',   { opacity: 0, y: 14, duration: 0.48, ease: 'power2.out' }, 22.85);
-      tl.to('#s4-fade',    { opacity: 1, duration: 0.8, ease: 'power2.in' },          24.2);
-
-      // ── Scene visibility — cross-fades with no overlap ────────────
-      tl.to('#s1',  { opacity: 0, duration: 0.3, ease: 'power1.in' }, 7.1);
-      tl.set('#s2', { opacity: 1 }, 7.38);
-      tl.to('#s2',  { opacity: 0, duration: 0.3, ease: 'power1.in' }, 16.0);
-      tl.set('#s3', { opacity: 1 }, 16.28);
-      tl.to('#s3',  { opacity: 0, duration: 0.3, ease: 'power1.in' }, 21.0);
-      tl.set('#s4', { opacity: 1 }, 21.18);
-
-      window.__timelines['content-agent-promo'] = tl;
-
-      if (typeof window.__hyperframes === 'undefined') {
-        tl.eventCallback('onComplete', function () {
-          // reset scene visibility
-          gsap.set('#s1', { opacity: 1 });
-          gsap.set(['#s2', '#s3', '#s4'], { opacity: 0 });
-          // reset step colors
-          gsap.set(['#s2-h1','#s2-idx1'], { color: '#fff' });
-          gsap.set('#s2-d1', { color: 'rgba(255,255,255,0.4)' });
-          gsap.set(['#s2-h2','#s2-h3','#s2-h4'], { color: 'rgba(255,255,255,0.3)' });
-          gsap.set(['#s2-idx2','#s2-idx3','#s2-idx4'], { color: 'rgba(255,255,255,0.18)' });
-          gsap.set(['#s2-d2','#s2-d3','#s2-d4'], { color: 'rgba(255,255,255,0.18)' });
-          const ct = document.getElementById('s2-counter');
-          if (ct) ct.textContent = '01 / 04';
-          tl.restart();
-        });
-        setTimeout(() => tl.play(), 250);
-      }
-    </script>
-
+    <div class="n-scene-tag">01 / 04 · NOTION DRAFT</div>
   </div>
+
+  <!-- ── SCENE 2: PIPELINE ── -->
+  <div id="s2" class="scene" style="opacity:0;">
+    <div class="p-wrap">
+      <div class="p-header">
+        <div id="p-eye" class="p-eyebrow">Content Agent · 파이프라인 실행</div>
+        <div id="p-title" class="p-title">Docker 개념 정리 → 발행 자동화</div>
+        <div id="p-sub" class="p-sub">thisnorm · 지금 실행 중</div>
+      </div>
+
+      <div class="p-steps">
+        <div id="p-s1" class="p-step">
+          <div class="p-icon done">✓</div>
+          <div class="p-info">
+            <div class="p-name">Notion 페이지 읽기</div>
+            <div class="p-detail">🐳 Docker 개념 정리 · 초안 · 약 1,240자 추출</div>
+          </div>
+          <div class="p-time">0.3s</div>
+        </div>
+
+        <div id="p-s2" class="p-step">
+          <div id="p-i2" class="p-icon run"><div class="spinner"></div></div>
+          <div class="p-info">
+            <div class="p-name">Claude AI 각색</div>
+            <div id="p-d2" class="p-detail">티스토리 포스팅 스타일로 변환 중...</div>
+          </div>
+          <div id="p-t2" class="p-time"></div>
+        </div>
+
+        <div id="p-s3" class="p-step">
+          <div id="p-i3" class="p-icon wait">03</div>
+          <div class="p-info">
+            <div class="p-name">Tistory 발행</div>
+            <div id="p-d3" class="p-detail">대기 중...</div>
+          </div>
+          <div id="p-t3" class="p-time"></div>
+        </div>
+
+        <div id="p-s4" class="p-step">
+          <div id="p-i4" class="p-icon wait">04</div>
+          <div class="p-info">
+            <div class="p-name">X (Twitter) 공유</div>
+            <div id="p-d4" class="p-detail">대기 중...</div>
+          </div>
+          <div id="p-t4" class="p-time"></div>
+        </div>
+      </div>
+
+      <div class="p-footer">
+        <div class="p-progress-labels">
+          <div id="p-label" class="p-progress-label">PROCESSING</div>
+          <div id="p-pct" class="p-progress-pct">0%</div>
+        </div>
+        <div class="p-bar-bg"><div id="p-bar" class="p-bar"></div></div>
+      </div>
+    </div>
+    <div class="n-scene-tag" style="color:rgba(255,255,255,0.2);">02 / 04 · PIPELINE</div>
+  </div>
+
+  <!-- ── SCENE 3: TISTORY ── -->
+  <div id="s3" class="scene" style="opacity:0;">
+    <div class="b-chrome">
+      <div class="b-dots">
+        <div class="b-dot r"></div>
+        <div class="b-dot y"></div>
+        <div class="b-dot g"></div>
+      </div>
+      <div class="b-url">
+        <span class="b-lock">🔒</span>
+        <span>thisnorm.tistory.com/59</span>
+      </div>
+    </div>
+    <div class="b-content">
+      <div class="b-inner">
+        <div id="t-cat" class="t-category">AI DevOps · 규범이의 코딩 맛집</div>
+        <div id="t-title" class="t-title">Docker를 처음 공부할 때<br/>막혔던 것들, 한 번에 정리</div>
+        <div id="t-meta" class="t-meta">
+          <span>thisnorm</span>
+          <span class="t-meta-sep">·</span>
+          <span>2026. 04. 27</span>
+          <span class="t-meta-sep">·</span>
+          <span>읽는 시간 약 5분</span>
+        </div>
+        <div id="t-body" class="t-body">
+          <p>Docker를 처음 공부할 때는 용어가 한꺼번에 쏟아져서 흐름이 잘 보이지 않는 경우가 많다. 특히 개념은 이해한 것 같은데 실제 명령어와 연결이 안 되면 금방 막히게 된다.</p>
+          <div class="t-h2">Dockerfile이란?</div>
+          <p>Dockerfile은 이미지를 <strong>재현 가능하게</strong> 만들기 위한 선언 파일이다. 마치 요리 레시피처럼 — 어떤 재료(이미지)를 쓰고, 어떤 순서로 준비하고, 최종적으로 어떤 명령을 실행할지를 한 파일에 적어 둔다.</p>
+          <div class="t-callout">💡 Dockerfile은 이미지 생성 과정을 <strong>코드로 문서화</strong>한다. Git으로 버전 관리하고 팀이 공유할 수 있다.</div>
+        </div>
+        <div id="t-tags" class="t-tags">
+          <span class="t-tag">Docker</span>
+          <span class="t-tag">Dockerfile</span>
+          <span class="t-tag">DevOps</span>
+          <span class="t-tag">컨테이너</span>
+          <span class="t-tag">AI DevOps</span>
+        </div>
+      </div>
+    </div>
+    <div class="n-scene-tag" style="top:56px;">03 / 04 · TISTORY</div>
+  </div>
+
+  <!-- ── SCENE 4: X ── -->
+  <div id="s4" class="scene" style="opacity:0;">
+    <div class="x-sidebar">
+      <div class="x-logo">𝕏</div>
+      <div class="x-nav">
+        <div class="x-nav-item active"><span class="x-nav-icon">🏠</span><span>홈</span></div>
+        <div class="x-nav-item"><span class="x-nav-icon">🔍</span><span>탐색</span></div>
+        <div class="x-nav-item"><span class="x-nav-icon">🔔</span><span>알림</span></div>
+        <div class="x-nav-item"><span class="x-nav-icon">✉️</span><span>메시지</span></div>
+      </div>
+    </div>
+
+    <div class="x-main">
+      <div class="x-main-header">홈</div>
+      <div id="x-tweet" class="x-tweet" style="opacity:0;">
+        <div class="x-tweet-header">
+          <div class="x-avatar">T</div>
+          <div>
+            <div class="x-name">thisnorm</div>
+            <div class="x-handle">@thisnorm_dev · 방금</div>
+          </div>
+        </div>
+        <div class="x-body">
+          새 글 발행했습니다 🐳<br/><br/>
+          Docker를 처음 공부할 때 용어가 한꺼번에 쏟아지는 경험,<br/>
+          다들 있으시죠? Dockerfile부터 핵심 명령어까지 흐름 위주로 정리했어요.<br/><br/>
+          <a>thisnorm.tistory.com/59</a>
+        </div>
+        <div class="x-preview">
+          <div class="x-preview-thumb">🐳</div>
+          <div class="x-preview-body">
+            <div class="x-preview-domain">thisnorm.tistory.com</div>
+            <div class="x-preview-title">Docker를 처음 공부할 때 막혔던 것들, 한 번에 정리</div>
+          </div>
+        </div>
+        <div class="x-actions">
+          <div class="x-action">💬 <span>3</span></div>
+          <div class="x-action">🔁 <span>12</span></div>
+          <div class="x-action">❤️ <span>47</span></div>
+          <div class="x-action">📊 <span>1.2K</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="x-right">
+      <div class="x-search">🔍 <span>검색</span></div>
+    </div>
+    <div class="n-scene-tag" style="color:rgba(255,255,255,0.2);">04 / 04 · X (TWITTER)</div>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+const tl = gsap.timeline({ paused: true });
+
+// ── INITIAL STATES ──────────────────────────────────
+tl.set('#n-emoji', { opacity:0, y:18 }, 0);
+tl.set('#n-title', { opacity:0, y:18 }, 0);
+tl.set('#n-meta',  { opacity:0 }, 0);
+tl.set('#n-body',  { opacity:0, y:10 }, 0);
+
+tl.set('#p-eye',   { opacity:0, y:8 }, 0);
+tl.set('#p-title', { opacity:0, y:12 }, 0);
+tl.set('#p-sub',   { opacity:0 }, 0);
+tl.set('#p-bar',   { width:'0%' }, 0);
+
+tl.set('#t-cat',   { opacity:0, y:8 }, 0);
+tl.set('#t-title', { opacity:0, y:14 }, 0);
+tl.set('#t-meta',  { opacity:0 }, 0);
+tl.set('#t-body',  { opacity:0, y:8 }, 0);
+tl.set('#t-tags',  { opacity:0 }, 0);
+
+// ── SCENE 1: NOTION (0 → 7s) ────────────────────────
+tl.to('#n-emoji', { opacity:1, y:0, duration:0.4, ease:'power2.out' }, 0.3);
+tl.to('#n-title', { opacity:1, y:0, duration:0.45, ease:'power2.out' }, 0.55);
+tl.to('#n-meta',  { opacity:1, duration:0.3 }, 0.9);
+tl.to('#n-body',  { opacity:1, y:0, duration:0.5, ease:'power2.out' }, 1.1);
+
+// faster scene fade: shorter duration and earlier switch
+tl.to('#s1', { opacity:0, duration:0.18 }, 6.6);
+tl.set('#s2', { opacity:1 }, 6.78);
+
+// ── SCENE 2: PIPELINE (7s → 17.5s) ──────────────────
+tl.to('#p-eye',   { opacity:1, y:0, duration:0.3 }, 7.2);
+tl.to('#p-title', { opacity:1, y:0, duration:0.4, ease:'power2.out' }, 7.4);
+tl.to('#p-sub',   { opacity:1, duration:0.3 }, 7.7);
+
+// Step 1 (already done)
+tl.to('#p-s1', { opacity:1, duration:0.4 }, 8.0);
+tl.to('#p-bar', { width:'25%', duration:0.5, ease:'power1.out' }, 8.0);
+tl.call(() => { document.getElementById('p-pct').textContent = '25%'; }, [], 8.5);
+
+// Step 2 (running → done)
+tl.to('#p-s2', { opacity:1, duration:0.4 }, 8.6);
+tl.to('#p-bar', { width:'55%', duration:2.8, ease:'power1.inOut' }, 8.8);
+tl.call(() => {
+  var i = document.getElementById('p-i2');
+  i.className = 'p-icon done'; i.innerHTML = '✓';
+  document.getElementById('p-d2').textContent = '각색 완료 · 2,180자 · 티스토리 포맷 적용';
+  document.getElementById('p-t2').textContent = '3.7s';
+  document.getElementById('p-pct').textContent = '55%';
+}, [], 11.6);
+
+// Step 3 (waiting → running → done)
+tl.to('#p-s3', { opacity:1, duration:0.35 }, 12.1);
+tl.call(() => {
+  var i = document.getElementById('p-i3');
+  i.className = 'p-icon run'; i.innerHTML = '<div class="spinner"></div>';
+  document.getElementById('p-pct').textContent = '60%';
+}, [], 12.1);
+tl.to('#p-bar', { width:'78%', duration:1.3, ease:'power1.inOut' }, 12.1);
+tl.call(() => {
+  var i = document.getElementById('p-i3');
+  i.className = 'p-icon done'; i.innerHTML = '✓';
+  document.getElementById('p-d3').textContent = 'thisnorm.tistory.com/59 발행 완료';
+  document.getElementById('p-t3').textContent = '0.9s';
+  document.getElementById('p-pct').textContent = '78%';
+}, [], 13.5);
+
+// Step 4 (waiting → running → done)
+tl.to('#p-s4', { opacity:1, duration:0.35 }, 13.9);
+tl.call(() => {
+  var i = document.getElementById('p-i4');
+  i.className = 'p-icon run'; i.innerHTML = '<div class="spinner"></div>';
+  document.getElementById('p-pct').textContent = '85%';
+}, [], 13.9);
+tl.to('#p-bar', { width:'100%', duration:0.9, ease:'power1.out' }, 14.3);
+tl.call(() => {
+  var i = document.getElementById('p-i4');
+  i.className = 'p-icon done'; i.innerHTML = '✓';
+  document.getElementById('p-d4').textContent = '@thisnorm_dev 트윗 발행 · 링크 프리뷰 포함';
+  document.getElementById('p-t4').textContent = '0.5s';
+  document.getElementById('p-pct').textContent = '100%';
+  document.getElementById('p-label').textContent = 'COMPLETED';
+}, [], 15.3);
+
+// faster scene fade to Tistory
+tl.to('#s2', { opacity:0, duration:0.18 }, 17.0);
+tl.set('#s3', { opacity:1 }, 17.18);
+
+// ── SCENE 3: TISTORY (17.5s → 23s) ──────────────────
+tl.to('#t-cat',   { opacity:1, y:0, duration:0.3 }, 17.8);
+tl.to('#t-title', { opacity:1, y:0, duration:0.5, ease:'power2.out' }, 18.0);
+tl.to('#t-meta',  { opacity:1, duration:0.3 }, 18.5);
+tl.to('#t-body',  { opacity:1, y:0, duration:0.5, ease:'power2.out' }, 18.7);
+tl.to('#t-tags',  { opacity:1, duration:0.35 }, 19.3);
+
+// faster scene fade to X
+tl.to('#s3', { opacity:0, duration:0.18 }, 22.6);
+tl.set('#s4', { opacity:1 }, 22.78);
+
+// ── SCENE 4: X (extended hold) ───────────────────────
+// show tweet slightly earlier and hold the scene longer so it doesn't feel rushed
+tl.to('#x-tweet', { opacity:1, y:0, duration:0.45, ease:'power2.out' }, 23.0);
+// hold the end for a few seconds before timeline completes
+tl.to({}, { duration: 4 }, 23.45);
+
+// ── REGISTER ────────────────────────────────────────
+window.__timelines = window.__timelines || {};
+window.__timelines['ca-real-demo'] = tl;
+
+if (typeof window.__hyperframes === 'undefined') {
+  tl.eventCallback('onComplete', function() {
+    gsap.set('#s1', { opacity:1 });
+    gsap.set(['#s2','#s3','#s4'], { opacity:0 });
+    gsap.set('#n-emoji', { opacity:0, y:18 });
+    gsap.set('#n-title', { opacity:0, y:18 });
+    gsap.set('#n-meta',  { opacity:0 });
+    gsap.set('#n-body',  { opacity:0, y:10 });
+    gsap.set('#p-eye',   { opacity:0, y:8 });
+    gsap.set('#p-title', { opacity:0, y:12 });
+    gsap.set('#p-sub',   { opacity:0 });
+    gsap.set('#p-bar',   { width:'0%' });
+    gsap.set(['#p-s2','#p-s3','#p-s4'], { opacity:0 });
+    gsap.set('#t-cat',   { opacity:0, y:8 });
+    gsap.set('#t-title', { opacity:0, y:14 });
+    gsap.set('#t-meta',  { opacity:0 });
+    gsap.set('#t-body',  { opacity:0, y:8 });
+    gsap.set('#t-tags',  { opacity:0 });
+    gsap.set('#x-tweet', { opacity:0 });
+    document.getElementById('p-pct').textContent = '0%';
+    document.getElementById('p-label').textContent = 'PROCESSING';
+    var i2 = document.getElementById('p-i2');
+    i2.className = 'p-icon run'; i2.innerHTML = '<div class="spinner"></div>';
+    document.getElementById('p-d2').textContent = '티스토리 포스팅 스타일로 변환 중...';
+    document.getElementById('p-t2').textContent = '';
+    var i3 = document.getElementById('p-i3');
+    i3.className = 'p-icon wait'; i3.innerHTML = '03';
+    document.getElementById('p-d3').textContent = '대기 중...';
+    document.getElementById('p-t3').textContent = '';
+    var i4 = document.getElementById('p-i4');
+    i4.className = 'p-icon wait'; i4.innerHTML = '04';
+    document.getElementById('p-d4').textContent = '대기 중...';
+    document.getElementById('p-t4').textContent = '';
+    tl.restart();
+  });
+  setTimeout(() => tl.play(), 250);
+}
+</script>
 </body>
 </html>
