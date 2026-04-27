@@ -39,52 +39,14 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
 
         <div class="hero-visual">
-          <div class="hero-card">
-            <div class="card-topbar">
-              <span class="dot dot-r"></span>
-              <span class="dot dot-y"></span>
-              <span class="dot dot-g"></span>
-              <span class="card-win-title">content-agent — run</span>
-            </div>
-            <div class="card-content">
-              <div class="flow-step">
-                <span class="flow-idx">01</span>
-                <div class="flow-body">
-                  <div class="step-name">Notion Draft</div>
-                  <div class="step-sub">콘텐츠 작성 완료</div>
-                </div>
-                <span class="flow-status done">완료</span>
-              </div>
-              <div class="flow-step active">
-                <span class="flow-idx">02</span>
-                <div class="flow-body">
-                  <div class="step-name">Content Formatting</div>
-                  <div class="step-sub">발행용 구조로 정리 중</div>
-                </div>
-                <span class="flow-status running">실행 중</span>
-              </div>
-              <div class="flow-step">
-                <span class="flow-idx">03</span>
-                <div class="flow-body">
-                  <div class="step-name">Thumbnail Generation</div>
-                  <div class="step-sub">썸네일 생성 대기</div>
-                </div>
-                <span class="flow-status wait">대기</span>
-              </div>
-              <div class="flow-step">
-                <span class="flow-idx">04</span>
-                <div class="flow-body">
-                  <div class="step-name">Blog &amp; SNS Publish</div>
-                  <div class="step-sub">채널 배포 대기</div>
-                </div>
-                <span class="flow-status wait">대기</span>
-              </div>
-            </div>
-            <div class="card-foot">
-              <span class="status-pill">파이프라인 실행 중</span>
-              <span class="tag-sm">step 2 / 4</span>
-            </div>
+          <div class="video-wrap" id="video-wrap">
+            <iframe
+              src="/video/index.html"
+              title="Content Agent 자동화 데모"
+              sandbox="allow-scripts allow-same-origin"
+            ></iframe>
           </div>
+          <p class="video-caption">실시간 파이프라인 애니메이션 데모</p>
         </div>
       </section>
 
@@ -304,63 +266,19 @@ npm start</code></pre>
   </div>
 `
 
-// Pipeline step animation
-const STEP_DATA = [
-  { subs: ['콘텐츠 작성 대기', 'Notion에서 불러오는 중', '콘텐츠 작성 완료'] },
-  { subs: ['포맷 대기',         '발행용 구조로 정리 중',  '구조 정리 완료'] },
-  { subs: ['썸네일 생성 대기',  '썸네일 생성 중',         '썸네일 생성 완료'] },
-  { subs: ['채널 배포 대기',    '채널에 배포 중',         '배포 완료'] },
-]
-
-function setPipelineStep(activeIdx: number) {
-  document.querySelectorAll('.flow-step').forEach((el, i) => {
-    const badge = el.querySelector('.flow-status') as HTMLElement
-    const sub   = el.querySelector('.step-sub')   as HTMLElement
-    el.classList.remove('active')
-    badge.className = 'flow-status'
-    if (i < activeIdx) {
-      badge.classList.add('done');    badge.textContent = '완료';    sub.textContent = STEP_DATA[i].subs[2]
-    } else if (i === activeIdx) {
-      el.classList.add('active')
-      badge.classList.add('running'); badge.textContent = '실행 중'; sub.textContent = STEP_DATA[i].subs[1]
-    } else {
-      badge.classList.add('wait');    badge.textContent = '대기';    sub.textContent = STEP_DATA[i].subs[0]
-    }
-  })
-  const pill    = document.querySelector<HTMLElement>('.status-pill')
-  const counter = document.querySelector<HTMLElement>('.tag-sm')
-  if (pill)    { pill.textContent = '파이프라인 실행 중'; pill.classList.remove('complete') }
-  if (counter) counter.textContent = `step ${activeIdx + 1} / 4`
+// Video iframe responsive scaling
+function scaleVideoIframe() {
+  const wrap = document.getElementById('video-wrap') as HTMLElement | null
+  if (!wrap) return
+  const iframe = wrap.querySelector('iframe') as HTMLIFrameElement | null
+  if (!iframe) return
+  const scale = wrap.offsetWidth / 1280
+  iframe.style.transform = `scale(${scale})`
 }
 
-function showPipelineDone() {
-  document.querySelectorAll('.flow-step').forEach((el, i) => {
-    const badge = el.querySelector('.flow-status') as HTMLElement
-    const sub   = el.querySelector('.step-sub')   as HTMLElement
-    el.classList.remove('active')
-    badge.className = 'flow-status done'; badge.textContent = '완료'; sub.textContent = STEP_DATA[i].subs[2]
-  })
-  const pill    = document.querySelector<HTMLElement>('.status-pill')
-  const counter = document.querySelector<HTMLElement>('.tag-sm')
-  if (pill)    { pill.textContent = '파이프라인 완료'; pill.classList.add('complete') }
-  if (counter) counter.textContent = 'step 4 / 4'
+const videoWrap = document.getElementById('video-wrap')
+if (videoWrap) {
+  const resizeObserver = new ResizeObserver(scaleVideoIframe)
+  resizeObserver.observe(videoWrap)
+  scaleVideoIframe()
 }
-
-let pipelineStep = 1  // initial HTML shows step 2 active (index 1)
-
-function runPipelineAnimation() {
-  pipelineStep = (pipelineStep + 1) % 5  // 0–3 = steps, 4 = all-done state
-  if (pipelineStep === 4) {
-    showPipelineDone()
-    setTimeout(() => {
-      pipelineStep = 0
-      setPipelineStep(0)
-      setTimeout(runPipelineAnimation, 2500)
-    }, 1500)
-  } else {
-    setPipelineStep(pipelineStep)
-    setTimeout(runPipelineAnimation, 2500)
-  }
-}
-
-setTimeout(runPipelineAnimation, 2500)
